@@ -35,7 +35,9 @@ public class Game {
 	}
 
 	public boolean add(String playerName) {
-		
+		if (players.size() == 5) {
+			throw new IllegalStateException("Can only add upto and including 5 players");
+		}
 		
 	    players.add(playerName);
 	    places[howManyPlayers()] = 0;
