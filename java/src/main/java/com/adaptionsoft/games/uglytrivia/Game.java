@@ -67,7 +67,7 @@ public class Game {
 	}
 
 	public boolean add(String playerName) {
-		if (players.size() == 5) {
+		if (howManyPlayers() == 5) {
 			throw new IllegalStateException("Can only add upto and including 5 players");
 		}
 
@@ -81,7 +81,7 @@ public class Game {
 		inPenaltyBox[howManyPlayers()] = false;
 
 		System.out.println(playerName + " was added");
-		System.out.println("They are player number " + players.size());
+		System.out.println("They are player number " + howManyPlayers());
 		return true;
 	}
 
@@ -209,7 +209,7 @@ public class Game {
 
 	void goToNextPlayer() {
 		currentPlayer++;
-		if (currentPlayer == players.size())
+		if (currentPlayer == howManyPlayers())
 			currentPlayer = 0;
 	}
 

@@ -138,4 +138,25 @@ public class GameTest {
 		assertTrue(exception.getMessage().contains("Invalid player number"));
 
 	}
+
+	@Test
+	public void test_howManyPlayers() {
+		assertEquals(2, game.howManyPlayers());
+	}
+
+	@Test
+	public void test_howManyPlayersWhereNoPlayersAddedYet() {
+		game = new Game();
+
+		assertEquals(0, game.howManyPlayers());
+	}
+
+	@Test
+	public void test_howManyPlayersOnceMorePlayerAdded() {
+		game.add("George");
+		game.add("Fred");
+		game.add("Jane");
+
+		assertEquals(5, game.howManyPlayers());
+	}
 }
