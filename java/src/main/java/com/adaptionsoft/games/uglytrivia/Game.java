@@ -3,9 +3,23 @@ package com.adaptionsoft.games.uglytrivia;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+class Player {
+	private int place;
+
+	public int getPlace() {
+		return place;
+	}
+
+	public void setPlace(int place) {
+		this.place = place;
+	}
+}
+
 public class Game {
+	List<Player> players_typed = new ArrayList<>();
 	ArrayList players = new ArrayList();
 	int[] places = new int[6];
 	int[] purses = new int[6];
@@ -45,6 +59,11 @@ public class Game {
 		}
 
 		players.add(playerName);
+
+		Player player = new Player();
+		player.setPlace(0);
+		players_typed.add(player);
+
 		places[howManyPlayers()] = 0;
 		purses[howManyPlayers()] = 0;
 		inPenaltyBox[howManyPlayers()] = false;
@@ -84,13 +103,21 @@ public class Game {
 	}
 
 	void updateNextPlace(int playerNumber, int roll) {
+		// New path
+		Player player = players_typed.get(playerNumber);
+		Integer newPlace = player.getPlace() + roll;
+		if (newPlace > 11)
+			newPlace = newPlace - 12;
+		player.setPlace(newPlace);
+
+		// Old path being strangled
 		places[playerNumber] = places[playerNumber] + roll;
 		if (places[playerNumber] > 11)
 			places[playerNumber] = places[playerNumber] - 12;
 
 		System.out.println(players.get(playerNumber)
 				+ "'s new location is "
-				+ places[playerNumber]);
+				+ player.getPlace());
 	}
 
 	private void askQuestion() {
