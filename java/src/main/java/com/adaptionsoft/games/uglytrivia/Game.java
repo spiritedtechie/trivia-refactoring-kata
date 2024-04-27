@@ -62,7 +62,7 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 
 				updateNextPlace(currentPlayer, roll);
-				System.out.println("The category is " + currentCategory());
+				System.out.println("The category is " + currentCategory(places[currentPlayer]));
 				askQuestion();
 			} else {
 				System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
@@ -72,7 +72,7 @@ public class Game {
 		} else {
 
 			updateNextPlace(currentPlayer, roll);
-			System.out.println("The category is " + currentCategory());
+			System.out.println("The category is " + currentCategory(places[currentPlayer]));
 			askQuestion();
 		}
 
@@ -89,34 +89,34 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		if (currentCategory() == "Pop")
+		if (currentCategory(places[currentPlayer]) == "Pop")
 			System.out.println(popQuestions.removeFirst());
-		if (currentCategory() == "Science")
+		if (currentCategory(places[currentPlayer]) == "Science")
 			System.out.println(scienceQuestions.removeFirst());
-		if (currentCategory() == "Sports")
+		if (currentCategory(places[currentPlayer]) == "Sports")
 			System.out.println(sportsQuestions.removeFirst());
-		if (currentCategory() == "Rock")
+		if (currentCategory(places[currentPlayer]) == "Rock")
 			System.out.println(rockQuestions.removeFirst());
 	}
 
-	private String currentCategory() {
-		if (places[currentPlayer] == 0)
+	String currentCategory(int playerPlace) {
+		if (playerPlace == 0)
 			return "Pop";
-		if (places[currentPlayer] == 4)
+		if (playerPlace == 4)
 			return "Pop";
-		if (places[currentPlayer] == 8)
+		if (playerPlace == 8)
 			return "Pop";
-		if (places[currentPlayer] == 1)
+		if (playerPlace == 1)
 			return "Science";
-		if (places[currentPlayer] == 5)
+		if (playerPlace == 5)
 			return "Science";
-		if (places[currentPlayer] == 9)
+		if (playerPlace == 9)
 			return "Science";
-		if (places[currentPlayer] == 2)
+		if (playerPlace == 2)
 			return "Sports";
-		if (places[currentPlayer] == 6)
+		if (playerPlace == 6)
 			return "Sports";
-		if (places[currentPlayer] == 10)
+		if (playerPlace == 10)
 			return "Sports";
 		return "Rock";
 	}
