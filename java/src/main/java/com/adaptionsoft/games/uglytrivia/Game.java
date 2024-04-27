@@ -89,14 +89,30 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		if (currentCategory(places[currentPlayer]) == "Pop")
-			System.out.println(popQuestions.removeFirst());
-		if (currentCategory(places[currentPlayer]) == "Science")
-			System.out.println(scienceQuestions.removeFirst());
-		if (currentCategory(places[currentPlayer]) == "Sports")
-			System.out.println(sportsQuestions.removeFirst());
-		if (currentCategory(places[currentPlayer]) == "Rock")
-			System.out.println(rockQuestions.removeFirst());
+		String question = (String) getQuestion(currentCategory(places[currentPlayer]));
+		System.out.println(question);
+	}
+
+	Object getQuestion(String category) {
+		LinkedList questionsForCategory = null;
+		if (category == "Pop")
+			questionsForCategory = popQuestions;
+		if (category == "Science")
+			questionsForCategory = scienceQuestions;
+		if (category == "Sports")
+			questionsForCategory = sportsQuestions;
+		if (category == "Rock")
+			questionsForCategory = rockQuestions;
+
+		if (questionsForCategory == null) {
+			return null;
+		}
+
+		if (questionsForCategory.isEmpty()) {
+			throw new IllegalStateException("No further questions for category: " + category);
+		}
+
+		return questionsForCategory.removeFirst();
 	}
 
 	String currentCategory(int playerPlace) {
@@ -115,7 +131,6 @@ public class Game {
 				return "Sports";
 			default:
 				return "Rock";
-
 		}
 	}
 

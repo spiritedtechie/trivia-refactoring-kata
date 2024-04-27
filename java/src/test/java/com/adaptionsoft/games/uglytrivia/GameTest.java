@@ -1,6 +1,7 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -43,21 +44,21 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_thatAPlayersNextPlaceInTurnsIsCurrentPlacePlusTheRollValue() {
+	public void test_thatAPlayersNextPlaceIsCurrentPlacePlusTheRollValue() {
 		game.updateNextPlace(0, 2);
 
 		assertEquals(2, game.places[0]);
 	}
 
 	@Test
-	public void test_thatAPlayersNextPlaceInTurnsDoesntExceed11() {
+	public void test_thatAPlayersNextPlaceDoesntExceed11() {
 		game.updateNextPlace(0, 12);
 
 		assertEquals(0, game.places[0]);
 	}
 
 	@Test
-	public void test_thatAPlayersNextPlaceInTurnsMaxesAt11() {
+	public void test_thatAPlayersNextPlaceMaxesAt11() {
 		game.add("Bob");
 		game.add("John");
 
@@ -81,5 +82,38 @@ public class GameTest {
 		assertEquals("Sports", game.currentCategory(10));
 		assertEquals("Rock", game.currentCategory(11));
 		assertEquals("Rock", game.currentCategory(12));
+	}
+
+	@Test
+	public void test_fetchesNextQuestionForEachCategory() {
+		assertEquals("Pop Question 0", game.getQuestion("Pop"));
+		assertEquals("Pop Question 1", game.getQuestion("Pop"));
+
+		assertEquals("Science Question 0", game.getQuestion("Science"));
+		assertEquals("Science Question 1", game.getQuestion("Science"));
+
+		assertEquals("Sports Question 0", game.getQuestion("Sports"));
+		assertEquals("Sports Question 1", game.getQuestion("Sports"));
+
+		assertEquals("Rock Question 0", game.getQuestion("Rock"));
+		assertEquals("Rock Question 1", game.getQuestion("Rock"));
+	}
+
+	@Test
+	public void test_fetchesEmptyQuestionForUnknownCategory() {
+		assertNull(game.getQuestion("Unknown"));
+	}
+
+	@Test
+	public void test_errorsOnceQuestionsForACategoryHaveRanOut() {
+		Exception exception = assertThrows(IllegalStateException.class, () -> {
+			for (int r = 0; r <= 50; r++) {
+				game.getQuestion("Pop");
+			}
+		});
+
+		String expectedMessage = "No further questions for category";
+		String actualMessage = exception.getMessage();
+		assertTrue(actualMessage.contains(expectedMessage));
 	}
 }
