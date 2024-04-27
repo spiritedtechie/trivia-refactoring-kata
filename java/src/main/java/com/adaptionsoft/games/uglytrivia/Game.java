@@ -34,7 +34,6 @@ class Player {
 
 public class Game {
 	List<Player> players_typed = new ArrayList<>();
-	ArrayList players = new ArrayList();
 	int[] purses = new int[6];
 	boolean[] inPenaltyBox = new boolean[6];
 
@@ -71,8 +70,6 @@ public class Game {
 			throw new IllegalStateException("Can only add upto and including 5 players");
 		}
 
-		players.add(playerName);
-
 		Player player = new Player(playerName);
 		player.setPlace(0);
 		players_typed.add(player);
@@ -86,7 +83,7 @@ public class Game {
 	}
 
 	public int howManyPlayers() {
-		return players.size();
+		return players_typed.size();
 	}
 
 	public void roll(int roll) {
@@ -115,7 +112,7 @@ public class Game {
 	}
 
 	Object getPlayerName(int playerNumber) {
-		if (playerNumber >= players_typed.size() || playerNumber < 0) {
+		if (playerNumber >= howManyPlayers() || playerNumber < 0) {
 			throw new IllegalArgumentException("Invalid player number");
 		}
 
