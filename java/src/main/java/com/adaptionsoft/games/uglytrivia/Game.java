@@ -33,7 +33,7 @@ class Player {
 }
 
 public class Game {
-	List<Player> players_typed = new ArrayList<>();
+	List<Player> players = new ArrayList<>();
 	int[] purses = new int[6];
 	boolean[] inPenaltyBox = new boolean[6];
 
@@ -72,7 +72,7 @@ public class Game {
 
 		Player player = new Player(playerName);
 		player.setPlace(0);
-		players_typed.add(player);
+		players.add(player);
 
 		purses[howManyPlayers()] = 0;
 		inPenaltyBox[howManyPlayers()] = false;
@@ -83,7 +83,7 @@ public class Game {
 	}
 
 	public int howManyPlayers() {
-		return players_typed.size();
+		return players.size();
 	}
 
 	public void roll(int roll) {
@@ -95,7 +95,7 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 
 				updateNextPlace(currentPlayer, roll);
-				System.out.println("The category is " + getCategory(players_typed.get(currentPlayer).getPlace()));
+				System.out.println("The category is " + getCategory(players.get(currentPlayer).getPlace()));
 				askQuestion();
 			} else {
 				System.out.println(getPlayerName(currentPlayer) + " is not getting out of the penalty box");
@@ -105,7 +105,7 @@ public class Game {
 		} else {
 
 			updateNextPlace(currentPlayer, roll);
-			System.out.println("The category is " + getCategory(players_typed.get(currentPlayer).getPlace()));
+			System.out.println("The category is " + getCategory(players.get(currentPlayer).getPlace()));
 			askQuestion();
 		}
 
@@ -116,11 +116,11 @@ public class Game {
 			throw new IllegalArgumentException("Invalid player number");
 		}
 
-		return players_typed.get(playerNumber).getName();
+		return players.get(playerNumber).getName();
 	}
 
 	void updateNextPlace(int playerNumber, int roll) {
-		Player player = players_typed.get(playerNumber);
+		Player player = players.get(playerNumber);
 		Integer newPlace = player.getPlace() + roll;
 		if (newPlace > 11)
 			newPlace = newPlace - 12;
@@ -132,7 +132,7 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		String question = (String) getNextQuestion(getCategory(players_typed.get(currentPlayer).getPlace()));
+		String question = (String) getNextQuestion(getCategory(players.get(currentPlayer).getPlace()));
 		System.out.println(question);
 	}
 
