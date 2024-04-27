@@ -68,47 +68,47 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_calculatesCurrentCategoryForPlayerBasedOnTheirPlace() {
-		assertEquals("Pop", game.currentCategory(0));
-		assertEquals("Science", game.currentCategory(1));
-		assertEquals("Sports", game.currentCategory(2));
-		assertEquals("Rock", game.currentCategory(3));
-		assertEquals("Pop", game.currentCategory(4));
-		assertEquals("Science", game.currentCategory(5));
-		assertEquals("Sports", game.currentCategory(6));
-		assertEquals("Rock", game.currentCategory(7));
-		assertEquals("Pop", game.currentCategory(8));
-		assertEquals("Science", game.currentCategory(9));
-		assertEquals("Sports", game.currentCategory(10));
-		assertEquals("Rock", game.currentCategory(11));
-		assertEquals("Rock", game.currentCategory(12));
+	public void test_getCategoryBasedOnPlace() {
+		assertEquals("Pop", game.getCategory(0));
+		assertEquals("Science", game.getCategory(1));
+		assertEquals("Sports", game.getCategory(2));
+		assertEquals("Rock", game.getCategory(3));
+		assertEquals("Pop", game.getCategory(4));
+		assertEquals("Science", game.getCategory(5));
+		assertEquals("Sports", game.getCategory(6));
+		assertEquals("Rock", game.getCategory(7));
+		assertEquals("Pop", game.getCategory(8));
+		assertEquals("Science", game.getCategory(9));
+		assertEquals("Sports", game.getCategory(10));
+		assertEquals("Rock", game.getCategory(11));
+		assertEquals("Rock", game.getCategory(12));
 	}
 
 	@Test
 	public void test_fetchesNextQuestionForEachCategory() {
-		assertEquals("Pop Question 0", game.getQuestion("Pop"));
-		assertEquals("Pop Question 1", game.getQuestion("Pop"));
+		assertEquals("Pop Question 0", game.getNextQuestion("Pop"));
+		assertEquals("Pop Question 1", game.getNextQuestion("Pop"));
 
-		assertEquals("Science Question 0", game.getQuestion("Science"));
-		assertEquals("Science Question 1", game.getQuestion("Science"));
+		assertEquals("Science Question 0", game.getNextQuestion("Science"));
+		assertEquals("Science Question 1", game.getNextQuestion("Science"));
 
-		assertEquals("Sports Question 0", game.getQuestion("Sports"));
-		assertEquals("Sports Question 1", game.getQuestion("Sports"));
+		assertEquals("Sports Question 0", game.getNextQuestion("Sports"));
+		assertEquals("Sports Question 1", game.getNextQuestion("Sports"));
 
-		assertEquals("Rock Question 0", game.getQuestion("Rock"));
-		assertEquals("Rock Question 1", game.getQuestion("Rock"));
+		assertEquals("Rock Question 0", game.getNextQuestion("Rock"));
+		assertEquals("Rock Question 1", game.getNextQuestion("Rock"));
 	}
 
 	@Test
 	public void test_fetchesEmptyQuestionForUnknownCategory() {
-		assertNull(game.getQuestion("Unknown"));
+		assertNull(game.getNextQuestion("Unknown"));
 	}
 
 	@Test
 	public void test_errorsOnceQuestionsForACategoryHaveRanOut() {
 		Exception exception = assertThrows(IllegalStateException.class, () -> {
 			for (int r = 0; r <= 50; r++) {
-				game.getQuestion("Pop");
+				game.getNextQuestion("Pop");
 			}
 		});
 

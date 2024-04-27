@@ -67,7 +67,7 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 
 				updateNextPlace(currentPlayer, roll);
-				System.out.println("The category is " + currentCategory(places[currentPlayer]));
+				System.out.println("The category is " + getCategory(places[currentPlayer]));
 				askQuestion();
 			} else {
 				System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
@@ -77,7 +77,7 @@ public class Game {
 		} else {
 
 			updateNextPlace(currentPlayer, roll);
-			System.out.println("The category is " + currentCategory(places[currentPlayer]));
+			System.out.println("The category is " + getCategory(places[currentPlayer]));
 			askQuestion();
 		}
 
@@ -94,11 +94,11 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		String question = (String) getQuestion(currentCategory(places[currentPlayer]));
+		String question = (String) getNextQuestion(getCategory(places[currentPlayer]));
 		System.out.println(question);
 	}
 
-	Object getQuestion(String category) {
+	Object getNextQuestion(String category) {
 		LinkedList<String> questionsForCategory = questions.get(category);
 
 		if (questionsForCategory == null) {
@@ -112,7 +112,7 @@ public class Game {
 		return questionsForCategory.removeFirst();
 	}
 
-	String currentCategory(int playerPlace) {
+	String getCategory(int playerPlace) {
 		switch (playerPlace) {
 			case 0:
 			case 4:
