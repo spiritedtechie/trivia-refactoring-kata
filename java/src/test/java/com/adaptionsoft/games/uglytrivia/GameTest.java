@@ -159,4 +159,43 @@ public class GameTest {
 
 		assertEquals(5, game.howManyPlayers());
 	}
+
+	@Test
+	public void test_add1CoinToPurseForPlayer1() {
+		int playerNo = 0;
+		assertEquals(0, game.purses[playerNo]);
+
+		game.addCoinToPurse(playerNo);
+
+		assertEquals(1, game.purses[playerNo]);
+	}
+
+	@Test
+	public void test_add2CoinToPurseForPlayer2() {
+		int playerNo = 1;
+		assertEquals(0, game.purses[playerNo]);
+
+		game.addCoinToPurse(playerNo);
+		game.addCoinToPurse(playerNo);
+
+		assertEquals(2, game.purses[playerNo]);
+	}
+
+	@Test
+	public void test_addCoinToPurseForInvalidPlayerThrowWhenPlayerNumberNegative() {
+		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+			game.addCoinToPurse(-1);
+		});
+
+		assertTrue(exception.getMessage().contains("Invalid player number"));
+	}
+
+	@Test
+	public void test_addCoinToPurseThrowWhenPlayerNumberGreaterThanNumberOfPlayers() {
+		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+			game.addCoinToPurse(5);
+		});
+
+		assertTrue(exception.getMessage().contains("Invalid player number"));
+	}
 }

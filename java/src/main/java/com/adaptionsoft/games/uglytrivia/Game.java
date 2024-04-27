@@ -173,11 +173,7 @@ public class Game {
 		if (inPenaltyBox[currentPlayer]) {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
-				purses[currentPlayer]++;
-				System.out.println(getPlayerName(currentPlayer)
-						+ " now has "
-						+ purses[currentPlayer]
-						+ " Gold Coins.");
+				addCoinToPurse(currentPlayer);
 
 				boolean winner = didPlayerWin();
 				goToNextPlayer();
@@ -191,17 +187,24 @@ public class Game {
 		} else {
 
 			System.out.println("Answer was corrent!!!!");
-			purses[currentPlayer]++;
-			System.out.println(getPlayerName(currentPlayer)
-					+ " now has "
-					+ purses[currentPlayer]
-					+ " Gold Coins.");
+			addCoinToPurse(currentPlayer);
 
 			boolean winner = didPlayerWin();
 			goToNextPlayer();
 
 			return winner;
 		}
+	}
+
+	void addCoinToPurse(int playerNumber) {
+		if (playerNumber >= howManyPlayers() || playerNumber < 0) {
+			throw new IllegalArgumentException("Invalid player number");
+		}
+		purses[playerNumber]++;
+		System.out.println(getPlayerName(playerNumber)
+				+ " now has "
+				+ purses[playerNumber]
+				+ " Gold Coins.");
 	}
 
 	void goToNextPlayer() {
