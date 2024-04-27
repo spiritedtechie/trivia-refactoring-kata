@@ -1,6 +1,7 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -197,5 +198,38 @@ public class GameTest {
 		});
 
 		assertTrue(exception.getMessage().contains("Invalid player number"));
+	}
+
+	@Test
+	public void test_didPlayerWin_True_WhenPurseLessThan6() {
+		int playerNo = 1;
+
+		addCoinsToPurse(playerNo, 5);
+
+		assertTrue(game.didPlayerWin(playerNo));
+	}
+
+	@Test
+	public void test_didPlayerWin_True_WhenPurseGreaterThan6() {
+		int playerNo = 1;
+
+		addCoinsToPurse(playerNo, 7);
+
+		assertTrue(game.didPlayerWin(playerNo));
+	}
+
+	@Test
+	public void test_didPlayerWin_False_WhenPurseEqualToSix() {
+		int playerNo = 1;
+
+		addCoinsToPurse(playerNo, 6);
+
+		assertFalse(game.didPlayerWin(playerNo));
+	}
+
+	private void addCoinsToPurse(int playerNo, int coinCount) {
+		for (int times = 1; times <= coinCount; times++) {
+			game.addCoinToPurse(playerNo);
+		}
 	}
 }

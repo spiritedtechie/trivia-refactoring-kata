@@ -175,7 +175,7 @@ public class Game {
 				System.out.println("Answer was correct!!!!");
 				addCoinToPurse(currentPlayer);
 
-				boolean winner = didPlayerWin();
+				boolean winner = didPlayerWin(currentPlayer);
 				goToNextPlayer();
 
 				return winner;
@@ -189,7 +189,7 @@ public class Game {
 			System.out.println("Answer was corrent!!!!");
 			addCoinToPurse(currentPlayer);
 
-			boolean winner = didPlayerWin();
+			boolean winner = didPlayerWin(currentPlayer);
 			goToNextPlayer();
 
 			return winner;
@@ -222,7 +222,7 @@ public class Game {
 		return true;
 	}
 
-	private boolean didPlayerWin() {
-		return !(purses[currentPlayer] == 6);
+	boolean didPlayerWin(int playerNumber) {
+		return !(purses[playerNumber] == 6);
 	}
 }
