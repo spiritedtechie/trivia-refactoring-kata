@@ -9,10 +9,10 @@ public class Game {
 	int[] purses = new int[6];
 	boolean[] inPenaltyBox = new boolean[6];
 
-	LinkedList popQuestions = new LinkedList();
-	LinkedList scienceQuestions = new LinkedList();
-	LinkedList sportsQuestions = new LinkedList();
-	LinkedList rockQuestions = new LinkedList();
+	LinkedList<String> popQuestions = new LinkedList<String>();
+	LinkedList<String> scienceQuestions = new LinkedList<String>();
+	LinkedList<String> sportsQuestions = new LinkedList<String>();
+	LinkedList<String> rockQuestions = new LinkedList<String>();
 
 	int currentPlayer = 0;
 	boolean isGettingOutOfPenaltyBox;
@@ -94,7 +94,7 @@ public class Game {
 	}
 
 	Object getQuestion(String category) {
-		LinkedList questionsForCategory = null;
+		LinkedList<String> questionsForCategory = null;
 		if (category == "Pop")
 			questionsForCategory = popQuestions;
 		if (category == "Science")
