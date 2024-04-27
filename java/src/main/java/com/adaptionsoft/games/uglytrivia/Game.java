@@ -7,7 +7,21 @@ import java.util.List;
 import java.util.Map;
 
 class Player {
+	private String name;
+
+	public Player(String name) {
+		this.name = name;
+	}
+
 	private int place;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public int getPlace() {
 		return place;
@@ -59,7 +73,7 @@ public class Game {
 
 		players.add(playerName);
 
-		Player player = new Player();
+		Player player = new Player(playerName);
 		player.setPlace(0);
 		players_typed.add(player);
 
@@ -101,11 +115,11 @@ public class Game {
 	}
 
 	Object getPlayerName(int playerNumber) {
-		if (playerNumber >= players.size() || playerNumber < 0) {
+		if (playerNumber >= players_typed.size() || playerNumber < 0) {
 			throw new IllegalArgumentException("Invalid player number");
 		}
 
-		return players.get(playerNumber);
+		return players_typed.get(playerNumber).getName();
 	}
 
 	void updateNextPlace(int playerNumber, int roll) {
@@ -163,7 +177,7 @@ public class Game {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 				purses[currentPlayer]++;
-				System.out.println(players.get(currentPlayer)
+				System.out.println(getPlayerName(currentPlayer)
 						+ " now has "
 						+ purses[currentPlayer]
 						+ " Gold Coins.");
@@ -181,7 +195,7 @@ public class Game {
 
 			System.out.println("Answer was corrent!!!!");
 			purses[currentPlayer]++;
-			System.out.println(players.get(currentPlayer)
+			System.out.println(getPlayerName(currentPlayer)
 					+ " now has "
 					+ purses[currentPlayer]
 					+ " Gold Coins.");
@@ -201,7 +215,7 @@ public class Game {
 
 	public boolean wrongAnswer() {
 		System.out.println("Question was incorrectly answered");
-		System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
+		System.out.println(getPlayerName(currentPlayer) + " was sent to the penalty box");
 		inPenaltyBox[currentPlayer] = true;
 
 		goToNextPlayer();
