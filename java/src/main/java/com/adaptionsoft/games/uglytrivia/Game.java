@@ -100,25 +100,23 @@ public class Game {
 	}
 
 	String currentCategory(int playerPlace) {
-		if (playerPlace == 0)
-			return "Pop";
-		if (playerPlace == 4)
-			return "Pop";
-		if (playerPlace == 8)
-			return "Pop";
-		if (playerPlace == 1)
-			return "Science";
-		if (playerPlace == 5)
-			return "Science";
-		if (playerPlace == 9)
-			return "Science";
-		if (playerPlace == 2)
-			return "Sports";
-		if (playerPlace == 6)
-			return "Sports";
-		if (playerPlace == 10)
-			return "Sports";
-		return "Rock";
+		switch (playerPlace) {
+			case 0:
+			case 4:
+			case 8:
+				return "Pop";
+			case 1:
+			case 5:
+			case 9:
+				return "Science";
+			case 2:
+			case 6:
+			case 10:
+				return "Sports";
+			default:
+				return "Rock";
+
+		}
 	}
 
 	public boolean wasCorrectlyAnswered() {
