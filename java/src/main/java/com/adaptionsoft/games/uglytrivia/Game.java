@@ -95,7 +95,6 @@ public class Game {
 				isGettingOutOfPenaltyBox = true;
 
 				updateNextPlace(currentPlayer, roll);
-				System.out.println("The category is " + getCategory(players.get(currentPlayer).getPlace()));
 				askQuestion();
 			} else {
 				System.out.println(getPlayerName(currentPlayer) + " is not getting out of the penalty box");
@@ -105,7 +104,6 @@ public class Game {
 		} else {
 
 			updateNextPlace(currentPlayer, roll);
-			System.out.println("The category is " + getCategory(players.get(currentPlayer).getPlace()));
 			askQuestion();
 		}
 
@@ -132,7 +130,9 @@ public class Game {
 	}
 
 	private void askQuestion() {
-		String question = (String) getNextQuestion(getCategory(players.get(currentPlayer).getPlace()));
+		String category = getCategory(players.get(currentPlayer).getPlace());
+		System.out.println("The category is " + getCategory(players.get(currentPlayer).getPlace()));
+		String question = (String) getNextQuestion(category);
 		System.out.println(question);
 	}
 
