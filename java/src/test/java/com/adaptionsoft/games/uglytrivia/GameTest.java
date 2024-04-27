@@ -232,4 +232,20 @@ public class GameTest {
 			game.addCoinToPurse(playerNo);
 		}
 	}
+
+	@Test
+	public void test_IsInPenaltyBox_False() {
+		int playerNo = 1;
+
+		assertFalse(game.inPenaltyBox(playerNo));
+	}
+
+	@Test
+	public void test_IsInPenaltyBox_True() {
+		int playerNo = 1;
+
+		game.putInPenaltyBox(playerNo);
+
+		assertTrue(game.inPenaltyBox(playerNo));
+	}
 }

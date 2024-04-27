@@ -95,7 +95,7 @@ public class Game {
 		System.out.println(getPlayerName(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
-		if (inPenaltyBox[currentPlayer]) {
+		if (inPenaltyBox(currentPlayer)) {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 
@@ -113,6 +113,8 @@ public class Game {
 		}
 
 	}
+
+
 
 	Object getPlayerName(int playerNumber) {
 		if (playerNumber >= howManyPlayers() || playerNumber < 0) {
@@ -175,7 +177,7 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (inPenaltyBox[currentPlayer]) {
+		if (inPenaltyBox(currentPlayer)) {
 			if (isGettingOutOfPenaltyBox) {
 				System.out.println("Answer was correct!!!!");
 				addCoinToPurse(currentPlayer);
@@ -222,7 +224,7 @@ public class Game {
 	public boolean wrongAnswer() {
 		System.out.println("Question was incorrectly answered");
 		System.out.println(getPlayerName(currentPlayer) + " was sent to the penalty box");
-		inPenaltyBox[currentPlayer] = true;
+		putInPenaltyBox(currentPlayer);
 
 		goToNextPlayer();
 		return true;
@@ -232,4 +234,12 @@ public class Game {
 		Player player = players.get(playerNumber);
 		return !(player.getPurse() == 6);
 	}
+
+	boolean inPenaltyBox(int playerNo) {
+		return inPenaltyBox[playerNo];
+	}
+
+    void putInPenaltyBox(int playerNumber) {
+        inPenaltyBox[playerNumber] = true;
+    }
 }
