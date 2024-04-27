@@ -61,7 +61,7 @@ public class Game {
 			if (roll % 2 != 0) {
 				isGettingOutOfPenaltyBox = true;
 
-				updateNextPlace(roll);
+				updateNextPlace(currentPlayer, roll);
 				System.out.println("The category is " + currentCategory());
 				askQuestion();
 			} else {
@@ -71,21 +71,21 @@ public class Game {
 
 		} else {
 
-			updateNextPlace(roll);
+			updateNextPlace(currentPlayer, roll);
 			System.out.println("The category is " + currentCategory());
 			askQuestion();
 		}
 
 	}
 
-	void updateNextPlace(int roll) {
-		places[currentPlayer] = places[currentPlayer] + roll;
-		if (places[currentPlayer] > 11)
-			places[currentPlayer] = places[currentPlayer] - 12;
+	void updateNextPlace(int playerNumber, int roll) {
+		places[playerNumber] = places[playerNumber] + roll;
+		if (places[playerNumber] > 11)
+			places[playerNumber] = places[playerNumber] - 12;
 
-		System.out.println(players.get(currentPlayer)
+		System.out.println(players.get(playerNumber)
 				+ "'s new location is "
-				+ places[currentPlayer]);
+				+ places[playerNumber]);
 	}
 
 	private void askQuestion() {

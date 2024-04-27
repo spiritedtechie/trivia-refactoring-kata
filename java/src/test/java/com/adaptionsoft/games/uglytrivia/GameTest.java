@@ -45,7 +45,7 @@ public class GameTest {
 		game.add("Bob");
 		game.add("John");
 
-		game.updateNextPlace(2);
+		game.updateNextPlace(0, 2);
 
 		assertEquals(2, game.places[0]);
 	}
@@ -55,7 +55,7 @@ public class GameTest {
 		game.add("Bob");
 		game.add("John");
 
-		game.updateNextPlace(12);
+		game.updateNextPlace(0, 12);
 
 		assertEquals(0, game.places[0]);
 	}
@@ -65,7 +65,7 @@ public class GameTest {
 		game.add("Bob");
 		game.add("John");
 
-		game.updateNextPlace(11);
+		game.updateNextPlace(0, 11);
 
 		assertEquals(11, game.places[0]);
 	}
