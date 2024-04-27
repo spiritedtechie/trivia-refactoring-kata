@@ -8,12 +8,12 @@ import java.util.Map;
 
 class Player {
 	private String name;
+	private int place = 0;
+	private int purse = 0;
 
 	public Player(String name) {
 		this.name = name;
 	}
-
-	private int place;
 
 	public String getName() {
 		return name;
@@ -30,11 +30,18 @@ class Player {
 	public void setPlace(int place) {
 		this.place = place;
 	}
+
+	public int getPurse() {
+		return purse;
+	}
+
+	public void addToPurse(int coins) {
+		this.purse += coins;
+	}
 }
 
 public class Game {
 	List<Player> players = new ArrayList<>();
-	int[] purses = new int[6];
 	boolean[] inPenaltyBox = new boolean[6];
 
 	private Map<String, LinkedList<String>> questions = new HashMap<>();
@@ -71,10 +78,8 @@ public class Game {
 		}
 
 		Player player = new Player(playerName);
-		player.setPlace(0);
 		players.add(player);
 
-		purses[howManyPlayers()] = 0;
 		inPenaltyBox[howManyPlayers()] = false;
 
 		System.out.println(playerName + " was added");
@@ -200,10 +205,11 @@ public class Game {
 		if (playerNumber >= howManyPlayers() || playerNumber < 0) {
 			throw new IllegalArgumentException("Invalid player number");
 		}
-		purses[playerNumber]++;
+		Player player = players.get(playerNumber);
+		player.addToPurse(1);
 		System.out.println(getPlayerName(playerNumber)
 				+ " now has "
-				+ purses[playerNumber]
+				+ player.getPurse()
 				+ " Gold Coins.");
 	}
 
@@ -223,6 +229,7 @@ public class Game {
 	}
 
 	boolean didPlayerWin(int playerNumber) {
-		return !(purses[playerNumber] == 6);
+		Player player = players.get(playerNumber);
+		return !(player.getPurse() == 6);
 	}
 }

@@ -164,22 +164,22 @@ public class GameTest {
 	@Test
 	public void test_add1CoinToPurseForPlayer1() {
 		int playerNo = 0;
-		assertEquals(0, game.purses[playerNo]);
+		assertEquals(0, game.players.get(playerNo).getPurse());
 
 		game.addCoinToPurse(playerNo);
 
-		assertEquals(1, game.purses[playerNo]);
+		assertEquals(1, game.players.get(playerNo).getPurse());
 	}
 
 	@Test
 	public void test_add2CoinToPurseForPlayer2() {
 		int playerNo = 1;
-		assertEquals(0, game.purses[playerNo]);
+		assertEquals(0, game.players.get(playerNo).getPurse());
 
 		game.addCoinToPurse(playerNo);
 		game.addCoinToPurse(playerNo);
 
-		assertEquals(2, game.purses[playerNo]);
+		assertEquals(2, game.players.get(playerNo).getPurse());
 	}
 
 	@Test
