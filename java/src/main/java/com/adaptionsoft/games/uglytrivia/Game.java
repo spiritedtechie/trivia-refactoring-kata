@@ -76,7 +76,7 @@ public class Game {
 	}
 
 	public void roll(int roll) {
-		System.out.println(players.get(currentPlayer) + " is the current player");
+		System.out.println(getPlayerName(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
 		if (inPenaltyBox[currentPlayer]) {
@@ -87,7 +87,7 @@ public class Game {
 				System.out.println("The category is " + getCategory(players_typed.get(currentPlayer).getPlace()));
 				askQuestion();
 			} else {
-				System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
+				System.out.println(getPlayerName(currentPlayer) + " is not getting out of the penalty box");
 				isGettingOutOfPenaltyBox = false;
 			}
 
@@ -100,6 +100,14 @@ public class Game {
 
 	}
 
+	Object getPlayerName(int playerNumber) {
+		if (playerNumber >= players.size() || playerNumber < 0) {
+			throw new IllegalArgumentException("Invalid player number");
+		}
+
+		return players.get(playerNumber);
+	}
+
 	void updateNextPlace(int playerNumber, int roll) {
 		Player player = players_typed.get(playerNumber);
 		Integer newPlace = player.getPlace() + roll;
@@ -107,7 +115,7 @@ public class Game {
 			newPlace = newPlace - 12;
 		player.setPlace(newPlace);
 
-		System.out.println(players.get(playerNumber)
+		System.out.println(getPlayerName(playerNumber)
 				+ "'s new location is "
 				+ player.getPlace());
 	}

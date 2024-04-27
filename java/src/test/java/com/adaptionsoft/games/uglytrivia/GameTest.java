@@ -60,9 +60,6 @@ public class GameTest {
 
 	@Test
 	public void test_thatAPlayersNextPlaceMaxesAt11() {
-		game.add("Bob");
-		game.add("John");
-
 		game.updateNextPlace(0, 11);
 
 		assertEquals(11, game.players_typed.get(0).getPlace());
@@ -113,8 +110,32 @@ public class GameTest {
 			}
 		});
 
-		String expectedMessage = "No further questions for category";
-		String actualMessage = exception.getMessage();
-		assertTrue(actualMessage.contains(expectedMessage));
+		assertTrue(exception.getMessage().contains("No further questions for category"));
+	}
+
+	@Test
+	public void test_retrievesPlayerName() {
+		assertEquals("Bob", game.getPlayerName(0));
+		assertEquals("John", game.getPlayerName(1));
+	}
+
+	@Test
+	public void test_retrievesPlayerNameThrowWhenPlayerNumberGreaterThanNumberOfPlayers() {
+		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+			game.getPlayerName(3);
+		});
+
+		assertTrue(exception.getMessage().contains("Invalid player number"));
+
+	}
+
+	@Test
+	public void test_retrievesPlayerNameThrowWhenPlayerNumberNegative() {
+		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+			game.getPlayerName(-1);
+		});
+
+		assertTrue(exception.getMessage().contains("Invalid player number"));
+
 	}
 }
