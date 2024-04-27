@@ -26,17 +26,13 @@ public class Game {
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
-			rockQuestions.addLast(createRockQuestion(i));
+			rockQuestions.addLast("Rock Question " + i);
 		}
 
 		questions.put("Pop", popQuestions);
 		questions.put("Science", scienceQuestions);
 		questions.put("Sports", sportsQuestions);
 		questions.put("Rock", rockQuestions);
-	}
-
-	public String createRockQuestion(int index) {
-		return "Rock Question " + index;
 	}
 
 	public boolean isPlayable() {
@@ -103,7 +99,6 @@ public class Game {
 	}
 
 	Object getQuestion(String category) {
-
 		LinkedList<String> questionsForCategory = questions.get(category);
 
 		if (questionsForCategory == null) {
