@@ -1,7 +1,9 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Game {
 	ArrayList players = new ArrayList();
@@ -9,21 +11,28 @@ public class Game {
 	int[] purses = new int[6];
 	boolean[] inPenaltyBox = new boolean[6];
 
-	LinkedList<String> popQuestions = new LinkedList<String>();
-	LinkedList<String> scienceQuestions = new LinkedList<String>();
-	LinkedList<String> sportsQuestions = new LinkedList<String>();
-	LinkedList<String> rockQuestions = new LinkedList<String>();
+	private Map<String, LinkedList<String>> questions = new HashMap<>();
 
 	int currentPlayer = 0;
 	boolean isGettingOutOfPenaltyBox;
 
 	public Game() {
+		LinkedList<String> popQuestions = new LinkedList<String>();
+		LinkedList<String> scienceQuestions = new LinkedList<String>();
+		LinkedList<String> sportsQuestions = new LinkedList<String>();
+		LinkedList<String> rockQuestions = new LinkedList<String>();
+
 		for (int i = 0; i < 50; i++) {
 			popQuestions.addLast("Pop Question " + i);
 			scienceQuestions.addLast(("Science Question " + i));
 			sportsQuestions.addLast(("Sports Question " + i));
 			rockQuestions.addLast(createRockQuestion(i));
 		}
+
+		questions.put("Pop", popQuestions);
+		questions.put("Science", scienceQuestions);
+		questions.put("Sports", sportsQuestions);
+		questions.put("Rock", rockQuestions);
 	}
 
 	public String createRockQuestion(int index) {
@@ -94,15 +103,8 @@ public class Game {
 	}
 
 	Object getQuestion(String category) {
-		LinkedList<String> questionsForCategory = null;
-		if (category == "Pop")
-			questionsForCategory = popQuestions;
-		if (category == "Science")
-			questionsForCategory = scienceQuestions;
-		if (category == "Sports")
-			questionsForCategory = sportsQuestions;
-		if (category == "Rock")
-			questionsForCategory = rockQuestions;
+
+		LinkedList<String> questionsForCategory = questions.get(category);
 
 		if (questionsForCategory == null) {
 			return null;
