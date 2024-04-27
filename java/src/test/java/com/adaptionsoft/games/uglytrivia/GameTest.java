@@ -47,7 +47,6 @@ public class GameTest {
 	public void test_thatAPlayersNextPlaceIsCurrentPlacePlusTheRollValue() {
 		game.updateNextPlace(0, 2);
 
-		assertEquals(2, game.places[0]);
 		assertEquals(2, game.players_typed.get(0).getPlace());
 
 	}
@@ -56,7 +55,6 @@ public class GameTest {
 	public void test_thatAPlayersNextPlaceDoesntExceed11() {
 		game.updateNextPlace(0, 12);
 
-		assertEquals(0, game.places[0]);
 		assertEquals(0, game.players_typed.get(0).getPlace());
 	}
 
@@ -67,9 +65,7 @@ public class GameTest {
 
 		game.updateNextPlace(0, 11);
 
-		assertEquals(11, game.places[0]);
 		assertEquals(11, game.players_typed.get(0).getPlace());
-
 	}
 
 	@Test
