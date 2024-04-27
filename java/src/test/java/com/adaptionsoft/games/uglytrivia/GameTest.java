@@ -39,4 +39,34 @@ public class GameTest {
 
 		assertTrue(actualMessage.contains(expectedMessage));
 	}
+
+	@Test
+	public void test_thatAPlayersNextPlaceInTurnsIsCurrentPlacePlusTheRollValue() {
+		game.add("Bob");
+		game.add("John");
+
+		game.updateNextPlace(2);
+
+		assertEquals(2, game.places[0]);
+	}
+
+	@Test
+	public void test_thatAPlayersNextPlaceInTurnsDoesntExceed11() {
+		game.add("Bob");
+		game.add("John");
+
+		game.updateNextPlace(12);
+
+		assertEquals(0, game.places[0]);
+	}
+
+	@Test
+	public void test_thatAPlayersNextPlaceInTurnsMaxesAt11() {
+		game.add("Bob");
+		game.add("John");
+
+		game.updateNextPlace(11);
+
+		assertEquals(11, game.places[0]);
+	}
 }
