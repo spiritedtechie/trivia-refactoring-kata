@@ -69,25 +69,25 @@ public class Game {
 	}
 
 	public boolean isPlayable() {
-		return (howManyPlayers() >= 2);
+		return (numberOfPlayers() >= 2);
 	}
 
 	public boolean add(String playerName) {
-		if (howManyPlayers() == 5) {
+		if (numberOfPlayers() == 5) {
 			throw new IllegalStateException("Can only add upto and including 5 players");
 		}
 
 		Player player = new Player(playerName);
 		players.add(player);
 
-		inPenaltyBox[howManyPlayers()] = false;
+		inPenaltyBox[numberOfPlayers()] = false;
 
 		System.out.println(playerName + " was added");
-		System.out.println("They are player number " + howManyPlayers());
+		System.out.println("They are player number " + numberOfPlayers());
 		return true;
 	}
 
-	public int howManyPlayers() {
+	public int numberOfPlayers() {
 		return players.size();
 	}
 
@@ -117,7 +117,7 @@ public class Game {
 
 
 	Object getPlayerName(int playerNumber) {
-		if (playerNumber >= howManyPlayers() || playerNumber < 0) {
+		if (playerNumber >= numberOfPlayers() || playerNumber < 0) {
 			throw new IllegalArgumentException("Invalid player number");
 		}
 
@@ -204,7 +204,7 @@ public class Game {
 	}
 
 	void addCoinToPurse(int playerNumber) {
-		if (playerNumber >= howManyPlayers() || playerNumber < 0) {
+		if (playerNumber >= numberOfPlayers() || playerNumber < 0) {
 			throw new IllegalArgumentException("Invalid player number");
 		}
 		Player player = players.get(playerNumber);
@@ -217,7 +217,7 @@ public class Game {
 
 	void goToNextPlayer() {
 		currentPlayer++;
-		if (currentPlayer == howManyPlayers())
+		if (currentPlayer == numberOfPlayers())
 			currentPlayer = 0;
 	}
 

@@ -141,24 +141,24 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_howManyPlayers() {
-		assertEquals(2, game.howManyPlayers());
+	public void test_numberofPlayers() {
+		assertEquals(2, game.numberOfPlayers());
 	}
 
 	@Test
-	public void test_howManyPlayersWhereNoPlayersAddedYet() {
+	public void test_numberofPlayersWhereNoPlayersAddedYet() {
 		game = new Game();
 
-		assertEquals(0, game.howManyPlayers());
+		assertEquals(0, game.numberOfPlayers());
 	}
 
 	@Test
-	public void test_howManyPlayersOnceMorePlayerAdded() {
+	public void test_numberofPlayersOnceMorePlayerAdded() {
 		game.add("George");
 		game.add("Fred");
 		game.add("Jane");
 
-		assertEquals(5, game.howManyPlayers());
+		assertEquals(5, game.numberOfPlayers());
 	}
 
 	@Test
