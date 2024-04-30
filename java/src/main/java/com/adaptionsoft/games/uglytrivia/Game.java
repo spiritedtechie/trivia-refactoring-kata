@@ -182,10 +182,10 @@ public class Game {
 				System.out.println("Answer was correct!!!!");
 				addCoinToPurse(currentPlayer);
 
-				boolean winner = didPlayerWin(currentPlayer);
+				boolean notWinner = !didPlayerWin(currentPlayer);
 				goToNextPlayer();
 
-				return winner;
+				return notWinner;
 			} else {
 				goToNextPlayer();
 				return true;
@@ -196,10 +196,10 @@ public class Game {
 			System.out.println("Answer was corrent!!!!");
 			addCoinToPurse(currentPlayer);
 
-			boolean winner = didPlayerWin(currentPlayer);
+			boolean notWinner = !didPlayerWin(currentPlayer);
 			goToNextPlayer();
 
-			return winner;
+			return notWinner;
 		}
 	}
 
@@ -232,7 +232,7 @@ public class Game {
 
 	boolean didPlayerWin(int playerNumber) {
 		Player player = players.get(playerNumber);
-		return !(player.getPurse() == 6);
+		return player.getPurse() == 6;
 	}
 
 	boolean inPenaltyBox(int playerNo) {

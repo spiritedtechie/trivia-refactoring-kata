@@ -201,30 +201,30 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_didPlayerWin_True_WhenPurseLessThan6() {
+	public void test_didPlayerWin_False_WhenPurseLessThan6() {
 		int playerNo = 1;
 
 		addCoinsToPurse(playerNo, 5);
 
-		assertTrue(game.didPlayerWin(playerNo));
+		assertFalse(game.didPlayerWin(playerNo));
 	}
 
 	@Test
-	public void test_didPlayerWin_True_WhenPurseGreaterThan6() {
+	public void test_didPlayerWin_False_WhenPurseGreaterThan6() {
 		int playerNo = 1;
 
 		addCoinsToPurse(playerNo, 7);
 
-		assertTrue(game.didPlayerWin(playerNo));
+		assertFalse(game.didPlayerWin(playerNo));
 	}
 
 	@Test
-	public void test_didPlayerWin_False_WhenPurseEqualToSix() {
+	public void test_didPlayerWin_True_WhenPurseEqualToSix() {
 		int playerNo = 1;
 
 		addCoinsToPurse(playerNo, 6);
 
-		assertFalse(game.didPlayerWin(playerNo));
+		assertTrue(game.didPlayerWin(playerNo));
 	}
 
 	private void addCoinsToPurse(int playerNo, int coinCount) {
