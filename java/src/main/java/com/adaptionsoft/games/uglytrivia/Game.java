@@ -107,7 +107,7 @@ public class Game {
 		return players.get(currentPlayerIndex);
 	}
 
-	public void roll(int roll) {
+	public void rollDice(int roll) {
 		Player player = getCurrentPlayer();
 
 		System.out.println(player.getName() + " is the current player");

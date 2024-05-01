@@ -243,7 +243,7 @@ public class GameTest {
 		Player player = game.getCurrentPlayer();
 		assertEquals(0, player.getPlace());
 
-		game.roll(6);
+		game.rollDice(6);
 
 		assertEquals(6, player.getPlace());
 		assertEquals("Bob is the current player\n" + //
@@ -259,7 +259,7 @@ public class GameTest {
 		player.setInPenaltyBox(true);
 		assertEquals(0, player.getPlace());
 
-		game.roll(6);
+		game.rollDice(6);
 
 		assertEquals(0, player.getPlace());
 		assertEquals("Bob is the current player\n" + //
@@ -274,7 +274,7 @@ public class GameTest {
 		player.setInPenaltyBox(true);
 		assertEquals(0, player.getPlace());
 
-		game.roll(5);
+		game.rollDice(5);
 
 		assertEquals(5, player.getPlace());
 		assertEquals("Bob is the current player\n" + //
