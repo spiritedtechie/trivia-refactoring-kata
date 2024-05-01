@@ -290,11 +290,12 @@ public class GameTest {
 	@Test
 	public void integration_test_roll_wherePlayerNotInPenaltyBox() {
 
-		assertEquals(0, game.players.get(0).getPlace());
+		Player player = game.players.get(0);
+		assertEquals(0, player.getPlace());
 
 		game.roll(6);
 
-		assertEquals(6, game.players.get(0).getPlace());
+		assertEquals(6, player.getPlace());
 		assertEquals("Bob is the current player\n" + //
 				"They have rolled a 6\n" + //
 				"Bob's new location is 6\n" + //
@@ -305,82 +306,71 @@ public class GameTest {
 	@Test
 	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidNotRollAnOddNumberSoStaysInPenaltyBox() {
 
-		game.players.get(0).setInPenaltyBox(true);
-		assertEquals(0, game.players.get(0).getPlace());
+		Player player = game.players.get(0);
+		player.setInPenaltyBox(true);
+		assertEquals(0, player.getPlace());
 
 		game.roll(6);
 
-		assertEquals(0, game.players.get(0).getPlace());
+		assertEquals(0, player.getPlace());
 		assertEquals("Bob is the current player\n" + //
 				"They have rolled a 6\n" + //
 				"Bob is not getting out of the penalty box", outputStreamCaptor.toString().trim());
-		assertFalse(game.isGettingOutOfPenaltyBox);
+		assertTrue(player.isInPenaltyBox());
 
 	}
 
 	@Test
 	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidRollAnOddNumberSoGetsOutOfPenaltyBox() {
 
-		game.players.get(0).setInPenaltyBox(true);
-		assertEquals(0, game.players.get(0).getPlace());
+		Player player = game.players.get(0);
+		player.setInPenaltyBox(true);
+		assertEquals(0, player.getPlace());
 
 		game.roll(5);
 
-		assertEquals(5, game.players.get(0).getPlace());
+		assertEquals(5, player.getPlace());
 		assertEquals("Bob is the current player\n" + //
 				"They have rolled a 5\n" + //
 				"Bob's new location is 5\n" + //
 				"The category is Science\n" + //
 				"Science Question 0", outputStreamCaptor.toString().trim());
-		assertTrue(game.isGettingOutOfPenaltyBox);
+		assertFalse(player.isInPenaltyBox());
 	}
 
 	@Test
 	public void integration_test_wasCorrectlyAnswered_wherePlayerNotInPenaltyBox() {
 
-		game.players.get(0).setInPenaltyBox(false);
+		Player player = game.players.get(0);
+		player.setInPenaltyBox(false);
 		assertEquals(0, game.currentPlayer);
-		assertEquals(0, game.players.get(0).getPurse());
+		assertEquals(0, player.getPurse());
 
 		boolean wasNotWinner = game.wasCorrectlyAnswered();
 
-		assertEquals(1, game.players.get(0).getPurse());
+		assertEquals(1, player.getPurse());
 		assertEquals("Answer was correct!!!!\n" + //
 				"Bob now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
 		assertTrue(wasNotWinner);
 		assertEquals(1, game.currentPlayer);
+		assertFalse(player.isInPenaltyBox());
+
 	}
 
 	@Test
-	public void integration_test_wasCorrectlyAnswered_wherePlayerInPenaltyBoxAndGettingOut() {
+	public void integration_test_wasCorrectlyAnswered_wherePlayerInPenaltyBox() {
 
-		game.players.get(0).setInPenaltyBox(true);
-		game.isGettingOutOfPenaltyBox = true;
+		Player player = game.players.get(0);
+		player.setInPenaltyBox(true);
 		assertEquals(0, game.currentPlayer);
-		assertEquals(0, game.players.get(0).getPurse());
+		assertEquals(0, player.getPurse());
 
 		boolean wasNotWinner = game.wasCorrectlyAnswered();
 
-		assertEquals(1, game.players.get(0).getPurse());
-		assertEquals("Answer was correct!!!!\n" + //
-				"Bob now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
-		assertTrue(wasNotWinner);
-		assertEquals(1, game.currentPlayer);
-	}
-
-	@Test
-	public void integration_test_wasCorrectlyAnswered_wherePlayerInPenaltyBoxAndNotGettingOut() {
-
-		game.players.get(0).setInPenaltyBox(true);
-		game.isGettingOutOfPenaltyBox = false;
-		assertEquals(0, game.currentPlayer);
-		assertEquals(0, game.players.get(0).getPurse());
-
-		boolean wasNotWinner = game.wasCorrectlyAnswered();
-
-		assertEquals(0, game.players.get(0).getPurse());
+		assertEquals(0, player.getPurse());
 		assertEquals("", outputStreamCaptor.toString().trim());
 		assertTrue(wasNotWinner);
 		assertEquals(1, game.currentPlayer);
+		assertTrue(player.isInPenaltyBox());
 	}
 }

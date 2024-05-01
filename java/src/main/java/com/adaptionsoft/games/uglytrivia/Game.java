@@ -55,7 +55,6 @@ public class Game {
 	private Map<String, LinkedList<String>> questions = new HashMap<>();
 
 	int currentPlayer = 0;
-	boolean isGettingOutOfPenaltyBox;
 
 	public Game() {
 		LinkedList<String> popQuestions = new LinkedList<String>();
@@ -103,16 +102,17 @@ public class Game {
 
 		boolean isOddRoll = roll % 2 != 0;
 
+		Player currPlayer = players.get(currentPlayer);
+
 		if (inPenaltyBox(currentPlayer)) {
 
 			if (isOddRoll) {
-				isGettingOutOfPenaltyBox = true;
+				currPlayer.setInPenaltyBox(false);
 
 				updateNextPlace(currentPlayer, roll);
 				askQuestion();
 			} else {
 				System.out.println(getPlayerName(currentPlayer) + " is not getting out of the penalty box");
-				isGettingOutOfPenaltyBox = false;
 			}
 
 		} else {
@@ -185,19 +185,8 @@ public class Game {
 
 	public boolean wasCorrectlyAnswered() {
 		if (inPenaltyBox(currentPlayer)) {
-			if (isGettingOutOfPenaltyBox) {
-				System.out.println("Answer was correct!!!!");
-				addCoinToPurse(currentPlayer);
-
-				boolean notWinner = !didPlayerWin(currentPlayer);
-				goToNextPlayer();
-
-				return notWinner;
-			} else {
-				goToNextPlayer();
-				return true;
-			}
-
+			goToNextPlayer();
+			return true;
 		} else {
 
 			System.out.println("Answer was correct!!!!");
