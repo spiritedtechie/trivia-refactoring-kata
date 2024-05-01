@@ -6,17 +6,33 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class GameTest {
 
 	private Game game = new Game();
+	private final PrintStream standardOut = System.out;
+	private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
 	@BeforeEach
 	public void addBasePlayers() {
 		game.add("Bob");
 		game.add("John");
+	}
+
+	@BeforeEach
+	public void setOutputStreamCaptor() {
+		System.setOut(new PrintStream(outputStreamCaptor));
+	}
+
+	@AfterEach
+	public void tearDown() {
+		System.setOut(standardOut);
 	}
 
 	@Test
@@ -67,6 +83,13 @@ public class GameTest {
 	}
 
 	@Test
+	public void test_thatUpdateNextPlacePrintsPlayersNextPlace() {
+		game.updateNextPlace(0, 2);
+
+		assertEquals("Bob's new location is 2", outputStreamCaptor.toString().trim());
+	}
+
+	@Test
 	public void test_getCategoryBasedOnPlace() {
 		assertEquals("Pop", game.getCategory(0));
 		assertEquals("Science", game.getCategory(1));
@@ -101,6 +124,14 @@ public class GameTest {
 	@Test
 	public void test_fetchesEmptyQuestionForUnknownCategory() {
 		assertNull(game.getNextQuestion("Unknown"));
+	}
+
+	@Test
+	public void test_askQuestionPrintsTheNextQuestion() {
+		game.askQuestion();
+
+		assertEquals("The category is Pop\n" + "Pop Question 0", outputStreamCaptor.toString().trim());
+
 	}
 
 	@Test
@@ -192,12 +223,19 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_addCoinToPurseThrowWhenPlayerNumberGreaterThanNumberOfPlayers() {
+	public void test_addCoinToPurseThrowsWhenPlayerNumberGreaterThanNumberOfPlayers() {
 		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
 			game.addCoinToPurse(5);
 		});
 
 		assertTrue(exception.getMessage().contains("Invalid player number"));
+	}
+
+	@Test
+	public void test_addCoinToPursePrintsCoinsPlayerHas() {
+		game.addCoinToPurse(1);
+
+		assertEquals("John now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
 	}
 
 	@Test

@@ -120,8 +120,6 @@ public class Game {
 
 	}
 
-
-
 	Object getPlayerName(int playerNumber) {
 		if (playerNumber >= numberOfPlayers() || playerNumber < 0) {
 			throw new IllegalArgumentException("Invalid player number");
@@ -142,7 +140,7 @@ public class Game {
 				+ player.getPlace());
 	}
 
-	private void askQuestion() {
+	void askQuestion() {
 		String category = getCategory(players.get(currentPlayer).getPlace());
 		System.out.println("The category is " + getCategory(players.get(currentPlayer).getPlace()));
 		String question = (String) getNextQuestion(category);
@@ -246,8 +244,8 @@ public class Game {
 		return player.isInPenaltyBox();
 	}
 
-    void putInPenaltyBox(int playerNumber) {
-        Player player = players.get(playerNumber);
+	void putInPenaltyBox(int playerNumber) {
+		Player player = players.get(playerNumber);
 		player.setInPenaltyBox(true);
-    }
+	}
 }
