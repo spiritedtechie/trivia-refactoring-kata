@@ -101,6 +101,14 @@ public class Game {
 		return true;
 	}
 
+	/*
+	 * Use rollDice instead
+	 */
+	@Deprecated
+	public void roll(int roll) {
+		this.rollDice(roll);
+	}
+
 	public void rollDice(int roll) {
 		Player player = getCurrentPlayer();
 
