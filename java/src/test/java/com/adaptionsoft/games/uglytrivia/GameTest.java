@@ -36,7 +36,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_thatCurrentPlayerPositionCannotExceedNumberOfPlayers() throws Exception {
+	public void test_goToNextPlayerCannotExceedNumberOfPlayers() throws Exception {
 		assertEquals(0, game.currentPlayer);
 		game.goToNextPlayer();
 		assertEquals(1, game.currentPlayer);
@@ -45,7 +45,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_thatThereCanBeAtMost5Players() {
+	public void test_addPlayerCanOnlySupportAtMost5Players() {
 		game.add("George");
 		game.add("Fred");
 		game.add("Jane");
@@ -61,7 +61,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_thatAPlayersNextPlaceIsCurrentPlacePlusTheRollValue() {
+	public void test_updateNextPlaceIsCurrentPlacePlusTheRollValue() {
 		game.updateNextPlace(0, 2);
 
 		assertEquals(2, game.players.get(0).getPlace());
@@ -69,28 +69,28 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_thatAPlayersNextPlaceDoesntExceed11() {
+	public void test_updateNextPlaceCannotExceed11AndCirclesBackRound() {
 		game.updateNextPlace(0, 12);
 
 		assertEquals(0, game.players.get(0).getPlace());
 	}
 
 	@Test
-	public void test_thatAPlayersNextPlaceMaxesAt11() {
+	public void test_updateNextPlaceMaxesAt11() {
 		game.updateNextPlace(0, 11);
 
 		assertEquals(11, game.players.get(0).getPlace());
 	}
 
 	@Test
-	public void test_thatUpdateNextPlacePrintsPlayersNextPlace() {
+	public void test_updateNextPlacePrintsPlayersNextPlace() {
 		game.updateNextPlace(0, 2);
 
 		assertEquals("Bob's new location is 2", outputStreamCaptor.toString().trim());
 	}
 
 	@Test
-	public void test_getCategoryBasedOnPlace() {
+	public void test_getCategoryBasedOnPlayerPlace() {
 		assertEquals("Pop", game.getCategory(0));
 		assertEquals("Science", game.getCategory(1));
 		assertEquals("Sports", game.getCategory(2));
@@ -107,7 +107,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_fetchesNextQuestionForEachCategory() {
+	public void test_getNextQuestionForEachCategory() {
 		assertEquals("Pop Question 0", game.getNextQuestion("Pop"));
 		assertEquals("Pop Question 1", game.getNextQuestion("Pop"));
 
@@ -122,7 +122,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_fetchesEmptyQuestionForUnknownCategory() {
+	public void test_getNextQuestionIsEmptyForUnknownCategory() {
 		assertNull(game.getNextQuestion("Unknown"));
 	}
 
@@ -135,7 +135,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_errorsOnceQuestionsForACategoryHaveRanOut() {
+	public void test_getNextQuestionErrorsOnceQuestionsForACategoryHaveRanOut() {
 		Exception exception = assertThrows(IllegalStateException.class, () -> {
 			for (int r = 0; r <= 50; r++) {
 				game.getNextQuestion("Pop");
@@ -146,13 +146,13 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_retrievesPlayerName() {
+	public void test_getPlayerName() {
 		assertEquals("Bob", game.getPlayerName(0));
 		assertEquals("John", game.getPlayerName(1));
 	}
 
 	@Test
-	public void test_retrievesPlayerNameThrowWhenPlayerNumberGreaterThanNumberOfPlayers() {
+	public void test_getPlayerNameThrowWhenPlayerNumberGreaterThanNumberOfPlayers() {
 		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
 			game.getPlayerName(3);
 		});
@@ -162,7 +162,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_retrievesPlayerNameThrowWhenPlayerNumberNegative() {
+	public void test_getPlayerNameThrowWhenPlayerNumberNegative() {
 		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
 			game.getPlayerName(-1);
 		});
@@ -184,7 +184,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_numberofPlayersOnceMorePlayerAdded() {
+	public void test_numberofPlayersOnceMorePlayersAdded() {
 		game.add("George");
 		game.add("Fred");
 		game.add("Jane");
@@ -193,7 +193,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_add1CoinToPurseForPlayer1() {
+	public void test_add1CoinToPurseForPlayer0() {
 		int playerNo = 0;
 		assertEquals(0, game.players.get(playerNo).getPurse());
 
@@ -203,7 +203,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_add2CoinToPurseForPlayer2() {
+	public void test_add2CoinToPurseForPlayer1() {
 		int playerNo = 1;
 		assertEquals(0, game.players.get(playerNo).getPurse());
 
@@ -214,7 +214,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_addCoinToPurseForInvalidPlayerThrowWhenPlayerNumberNegative() {
+	public void test_addCoinToPurseThrowsWhenPlayerNumberNegative() {
 		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
 			game.addCoinToPurse(-1);
 		});
@@ -232,14 +232,14 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_addCoinToPursePrintsCoinsPlayerHas() {
+	public void test_addCoinToPursePrintsNumberOfCoinsPlayerHas() {
 		game.addCoinToPurse(1);
 
 		assertEquals("John now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
 	}
 
 	@Test
-	public void test_didPlayerWin_False_WhenPurseLessThan6() {
+	public void test_didPlayerWin_False_whenPurseLessThan6() {
 		int playerNo = 1;
 
 		addCoinsToPurse(playerNo, 5);
@@ -248,7 +248,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_didPlayerWin_False_WhenPurseGreaterThan6() {
+	public void test_didPlayerWin_false_whenPurseGreaterThan6() {
 		int playerNo = 1;
 
 		addCoinsToPurse(playerNo, 7);
@@ -257,7 +257,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_didPlayerWin_True_WhenPurseEqualToSix() {
+	public void test_didPlayerWin_true_whenPurseEqualToSix() {
 		int playerNo = 1;
 
 		addCoinsToPurse(playerNo, 6);
@@ -272,18 +272,19 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_IsInPenaltyBox_False() {
+	public void test_inPenaltyBox_false() {
 		int playerNo = 1;
 
 		assertFalse(game.inPenaltyBox(playerNo));
 	}
 
 	@Test
-	public void test_IsInPenaltyBox_True() {
+	public void test_inPenaltyBox_true() {
 		int playerNo = 1;
 
 		game.putInPenaltyBox(playerNo);
 
 		assertTrue(game.inPenaltyBox(playerNo));
 	}
+
 }
