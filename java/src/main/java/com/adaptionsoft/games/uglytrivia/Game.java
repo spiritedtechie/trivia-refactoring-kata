@@ -101,15 +101,19 @@ public class Game {
 		System.out.println("They have rolled a " + roll);
 
 		boolean isOddRoll = roll % 2 != 0;
-		Player currPlayer = players.get(currentPlayer);
+		Player currPlayer = getCurrentPlayer();
 
-		if (inPenaltyBox(currentPlayer) && !isOddRoll) {
+		if (currPlayer.isInPenaltyBox() && !isOddRoll) {
 			System.out.println(getPlayerName(currentPlayer) + " is not getting out of the penalty box");
 		} else {
 			currPlayer.setInPenaltyBox(false);
 			updateNextPlace(currentPlayer, roll);
 			askQuestion();
 		}
+	}
+
+	private Player getCurrentPlayer() {
+		return players.get(currentPlayer);
 	}
 
 	Object getPlayerName(int playerNumber) {
@@ -133,8 +137,8 @@ public class Game {
 	}
 
 	void askQuestion() {
-		String category = getCategory(players.get(currentPlayer).getPlace());
-		System.out.println("The category is " + getCategory(players.get(currentPlayer).getPlace()));
+		String category = getCategory(getCurrentPlayer().getPlace());
+		System.out.println("The category is " + getCategory(getCurrentPlayer().getPlace()));
 		String question = (String) getNextQuestion(category);
 		System.out.println(question);
 	}
@@ -173,7 +177,8 @@ public class Game {
 	}
 
 	public boolean wasCorrectlyAnswered() {
-		if (inPenaltyBox(currentPlayer)) {
+		Player current = getCurrentPlayer();
+		if (current.isInPenaltyBox()) {
 			goToNextPlayer();
 			return true;
 		} else {
@@ -218,11 +223,6 @@ public class Game {
 	boolean didPlayerWin(int playerNumber) {
 		Player player = players.get(playerNumber);
 		return player.getPurse() == 6;
-	}
-
-	boolean inPenaltyBox(int playerNumber) {
-		Player player = players.get(playerNumber);
-		return player.isInPenaltyBox();
 	}
 
 	void putInPenaltyBox(int playerNumber) {

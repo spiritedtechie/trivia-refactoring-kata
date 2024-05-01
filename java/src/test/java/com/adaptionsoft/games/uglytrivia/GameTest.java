@@ -274,17 +274,19 @@ public class GameTest {
 	@Test
 	public void test_inPenaltyBox_false() {
 		int playerNo = 1;
+		Player player = game.players.get(playerNo);
 
-		assertFalse(game.inPenaltyBox(playerNo));
+		assertFalse(player.isInPenaltyBox());
 	}
 
 	@Test
 	public void test_inPenaltyBox_true() {
 		int playerNo = 1;
+		Player player = game.players.get(playerNo);
 
 		game.putInPenaltyBox(playerNo);
 
-		assertTrue(game.inPenaltyBox(playerNo));
+		assertTrue(player.isInPenaltyBox());
 	}
 
 	@Test
