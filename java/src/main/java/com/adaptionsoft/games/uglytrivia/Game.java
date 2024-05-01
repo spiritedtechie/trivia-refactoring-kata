@@ -67,7 +67,7 @@ public class Game {
 
 	private Map<String, LinkedList<String>> questions = new HashMap<>();
 
-	private int currentPlayer = 0;
+	private int currentPlayerIndex = 0;
 
 	public Game() {
 		LinkedList<String> popQuestions = new LinkedList<String>();
@@ -106,7 +106,7 @@ public class Game {
 	}
 
 	Player getCurrentPlayer() {
-		return players.get(currentPlayer);
+		return players.get(currentPlayerIndex);
 	}
 
 	public void roll(int roll) {
@@ -185,9 +185,9 @@ public class Game {
 	}
 
 	void goToNextPlayer() {
-		currentPlayer++;
-		if (currentPlayer == numberOfPlayers())
-			currentPlayer = 0;
+		currentPlayerIndex++;
+		if (currentPlayerIndex == numberOfPlayers())
+			currentPlayerIndex = 0;
 	}
 
 	public boolean wrongAnswer() {
