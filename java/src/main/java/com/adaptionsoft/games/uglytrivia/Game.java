@@ -97,14 +97,15 @@ public class Game {
 	}
 
 	public void roll(int roll) {
-		System.out.println(getPlayerName(currentPlayer) + " is the current player");
+		Player currPlayer = getCurrentPlayer();
+
+		System.out.println(currPlayer.getName() + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
 		boolean isOddRoll = roll % 2 != 0;
-		Player currPlayer = getCurrentPlayer();
 
 		if (currPlayer.isInPenaltyBox() && !isOddRoll) {
-			System.out.println(getPlayerName(currentPlayer) + " is not getting out of the penalty box");
+			System.out.println(currPlayer.getName() + " is not getting out of the penalty box");
 		} else {
 			currPlayer.setInPenaltyBox(false);
 			updateNextPlace(currentPlayer, roll);
