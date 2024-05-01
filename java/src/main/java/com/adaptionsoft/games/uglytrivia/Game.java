@@ -88,10 +88,6 @@ public class Game {
 		questions.put("Rock", rockQuestions);
 	}
 
-	public boolean isPlayable() {
-		return (numberOfPlayers() >= 2);
-	}
-
 	public boolean add(String playerName) {
 		if (numberOfPlayers() == 5) {
 			throw new IllegalStateException("Can only add upto and including 5 players");
@@ -105,8 +101,12 @@ public class Game {
 		return true;
 	}
 
-	public int numberOfPlayers() {
+	int numberOfPlayers() {
 		return players.size();
+	}
+
+	private Player getCurrentPlayer() {
+		return players.get(currentPlayer);
 	}
 
 	public void roll(int roll) {
@@ -125,10 +125,6 @@ public class Game {
 			System.out.println(player.getName() + "'s new location is " + player.getPlace());
 			askQuestion();
 		}
-	}
-
-	private Player getCurrentPlayer() {
-		return players.get(currentPlayer);
 	}
 
 	void askQuestion() {
