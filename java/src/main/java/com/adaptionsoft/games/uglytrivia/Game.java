@@ -11,6 +11,8 @@ enum Category {
 }
 
 class Player {
+	private static final int WINNING_PURSE_AMOUNT = 6;
+
 	private String name;
 	private int place = 0;
 	private int purse = 0;
@@ -57,12 +59,16 @@ class Player {
 	}
 
 	boolean didPlayerWin() {
-		return getPurse() == 6;
+		return getPurse() == WINNING_PURSE_AMOUNT;
 	}
 
 }
 
 public class Game {
+
+	private static final int MAXIMUM_NUMBER_OF_PLAYERS_ALLOWED = 5;
+
+	private static final int NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
 
 	private List<Player> players = new ArrayList<>();
 
@@ -77,7 +83,7 @@ public class Game {
 	private void initialiseQuestions() {
 		for (Category category : Category.values()) {
 			LinkedList<String> categoryQuestions = new LinkedList<String>();
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < NUMBER_OF_QUESTIONS_PER_CATEGORY; i++) {
 				categoryQuestions.addLast(category.name() + " Question " + i);
 			}
 			questions.put(category, categoryQuestions);
@@ -85,7 +91,7 @@ public class Game {
 	}
 
 	public boolean add(String playerName) {
-		if (numberOfPlayers() == 5) {
+		if (numberOfPlayers() == MAXIMUM_NUMBER_OF_PLAYERS_ALLOWED) {
 			throw new IllegalStateException("Can only add upto and including 5 players");
 		}
 
