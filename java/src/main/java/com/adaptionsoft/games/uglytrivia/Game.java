@@ -97,8 +97,7 @@ public class Game {
 			throw new IllegalStateException("Can only add upto and including 5 players");
 		}
 
-		Player player = new Player(playerName);
-		players.add(player);
+		players.add(new Player(playerName));
 
 		System.out.println(playerName + " was added");
 		System.out.println("They are player number " + numberOfPlayers());
@@ -119,9 +118,9 @@ public class Game {
 		System.out.println(player.getName() + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
-		boolean isOddRoll = roll % 2 != 0;
+		boolean isEvenRoll = roll % 2 == 0;
 
-		if (player.isInPenaltyBox() && !isOddRoll) {
+		if (player.isInPenaltyBox() && isEvenRoll) {
 			System.out.println(player.getName() + " is not getting out of the penalty box");
 		} else {
 			player.setInPenaltyBox(false);
