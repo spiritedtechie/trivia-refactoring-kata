@@ -160,6 +160,12 @@ public class Game {
 		}
 	}
 
+	/**
+	 * 
+	 * @return returns whether the play did NOT win. Reluctant to change
+	 *         a public interface method of this class. Ideally I would like to
+	 *         return isWinner instead, and have the client handle that case.
+	 */
 	public boolean wasCorrectlyAnswered() {
 		Player player = getCurrentPlayer();
 		if (player.isInPenaltyBox()) {
@@ -177,6 +183,12 @@ public class Game {
 		}
 	}
 
+	/**
+	 * 
+	 * @return returns a fixed value of True for the play did NOT win. Reluctant to change
+	 *         a public interface method of this class. Ideally I would like to
+	 *         return isWinner=False instead, and have the client handle that case.
+	 */
 	public boolean wrongAnswer() {
 		Player player = getCurrentPlayer();
 		player.setInPenaltyBox(true);
