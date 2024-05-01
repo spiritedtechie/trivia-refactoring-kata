@@ -197,47 +197,24 @@ public class GameTest {
 	@Test
 	public void test_add1CoinToPurseForPlayer0() {
 		int playerNo = 0;
-		assertEquals(0, game.players.get(playerNo).getPurse());
+		Player player = game.players.get(playerNo);
+		assertEquals(0, player.getPurse());
 
-		game.addCoinToPurse(playerNo);
+		player.addToPurse(1);
 
-		assertEquals(1, game.players.get(playerNo).getPurse());
+		assertEquals(1, player.getPurse());
 	}
 
 	@Test
 	public void test_add2CoinToPurseForPlayer1() {
 		int playerNo = 1;
-		assertEquals(0, game.players.get(playerNo).getPurse());
+		Player player = game.players.get(playerNo);
+		assertEquals(0, player.getPurse());
 
-		game.addCoinToPurse(playerNo);
-		game.addCoinToPurse(playerNo);
+		player.addToPurse(1);
+		player.addToPurse(1);
 
-		assertEquals(2, game.players.get(playerNo).getPurse());
-	}
-
-	@Test
-	public void test_addCoinToPurseThrowsWhenPlayerNumberNegative() {
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-			game.addCoinToPurse(-1);
-		});
-
-		assertTrue(exception.getMessage().contains("Invalid player number"));
-	}
-
-	@Test
-	public void test_addCoinToPurseThrowsWhenPlayerNumberGreaterThanNumberOfPlayers() {
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-			game.addCoinToPurse(5);
-		});
-
-		assertTrue(exception.getMessage().contains("Invalid player number"));
-	}
-
-	@Test
-	public void test_addCoinToPursePrintsNumberOfCoinsPlayerHas() {
-		game.addCoinToPurse(1);
-
-		assertEquals("John now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
+		assertEquals(2, player.getPurse());
 	}
 
 	@Test
@@ -268,8 +245,9 @@ public class GameTest {
 	}
 
 	private void addCoinsToPurse(int playerNo, int coinCount) {
+		Player player = game.players.get(playerNo);
 		for (int times = 1; times <= coinCount; times++) {
-			game.addCoinToPurse(playerNo);
+			player.addToPurse(1);
 		}
 	}
 

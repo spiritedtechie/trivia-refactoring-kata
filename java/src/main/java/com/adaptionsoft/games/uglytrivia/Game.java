@@ -54,6 +54,7 @@ class Player {
 			newPlace = newPlace - 12;
 		setPlace(newPlace);
 	}
+
 }
 
 public class Game {
@@ -181,25 +182,14 @@ public class Game {
 		} else {
 
 			System.out.println("Answer was correct!!!!");
-			addCoinToPurse(currentPlayer);
+			current.addToPurse(1);
+			System.out.println(current.getName() + " now has " + current.getPurse() + " Gold Coins.");
 
 			boolean notWinner = !didPlayerWin(currentPlayer);
 			goToNextPlayer();
 
 			return notWinner;
 		}
-	}
-
-	void addCoinToPurse(int playerNumber) {
-		if (playerNumber >= numberOfPlayers() || playerNumber < 0) {
-			throw new IllegalArgumentException("Invalid player number");
-		}
-		Player player = players.get(playerNumber);
-		player.addToPurse(1);
-		System.out.println(getPlayerName(playerNumber)
-				+ " now has "
-				+ player.getPurse()
-				+ " Gold Coins.");
 	}
 
 	void goToNextPlayer() {
