@@ -53,10 +53,7 @@ class Player {
 	}
 
 	void updateNextPlace(int roll) {
-		Integer newPlace = getPlace() + roll;
-		if (newPlace > 11)
-			newPlace = newPlace - 12;
-		setPlace(newPlace);
+		setPlace((place + roll) % 12);
 	}
 
 	boolean didPlayerWin() {
@@ -183,9 +180,7 @@ public class Game {
 	}
 
 	void goToNextPlayer() {
-		currentPlayerIndex++;
-		if (currentPlayerIndex == numberOfPlayers())
-			currentPlayerIndex = 0;
+		currentPlayerIndex = (currentPlayerIndex + 1) % numberOfPlayers();
 	}
 
 	public boolean wrongAnswer() {
