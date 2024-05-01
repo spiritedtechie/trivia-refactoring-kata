@@ -10,6 +10,7 @@ class Player {
 	private String name;
 	private int place = 0;
 	private int purse = 0;
+	private boolean inPenaltyBox = false;
 
 	public Player(String name) {
 		this.name = name;
@@ -38,11 +39,18 @@ class Player {
 	public void addToPurse(int coins) {
 		this.purse += coins;
 	}
+
+	public boolean isInPenaltyBox() {
+		return inPenaltyBox;
+	}
+
+	public void setInPenaltyBox(boolean inPenaltyBox) {
+		this.inPenaltyBox = inPenaltyBox;
+	}
 }
 
 public class Game {
 	List<Player> players = new ArrayList<>();
-	boolean[] inPenaltyBox = new boolean[6];
 
 	private Map<String, LinkedList<String>> questions = new HashMap<>();
 
@@ -79,8 +87,6 @@ public class Game {
 
 		Player player = new Player(playerName);
 		players.add(player);
-
-		inPenaltyBox[numberOfPlayers()] = false;
 
 		System.out.println(playerName + " was added");
 		System.out.println("They are player number " + numberOfPlayers());
@@ -235,11 +241,13 @@ public class Game {
 		return player.getPurse() == 6;
 	}
 
-	boolean inPenaltyBox(int playerNo) {
-		return inPenaltyBox[playerNo];
+	boolean inPenaltyBox(int playerNumber) {
+		Player player = players.get(playerNumber);
+		return player.isInPenaltyBox();
 	}
 
     void putInPenaltyBox(int playerNumber) {
-        inPenaltyBox[playerNumber] = true;
+        Player player = players.get(playerNumber);
+		player.setInPenaltyBox(true);
     }
 }
