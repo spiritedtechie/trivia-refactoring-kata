@@ -52,22 +52,14 @@ class Player {
 	boolean didPlayerWin() {
 		return getPurse() == WINNING_PURSE_AMOUNT;
 	}
-
 }
 
-public class Game {
-
-	private static final int MAXIMUM_NUMBER_OF_PLAYERS_ALLOWED = 5;
-
+class QuestionBank {
 	private static final int NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
-
-	private List<Player> players = new ArrayList<>();
 
 	private EnumMap<Category, LinkedList<String>> questions = new EnumMap<>(Category.class);
 
-	private int currentPlayerIndex = 0;
-
-	public Game() {
+	public QuestionBank() {
 		initialiseQuestions();
 	}
 
@@ -79,6 +71,37 @@ public class Game {
 			}
 			questions.put(category, categoryQuestions);
 		}
+	}
+
+	String getNextQuestion(Category category) {
+		LinkedList<String> questionsForCategory = questions.get(category);
+
+		if (questionsForCategory == null) {
+			return null;
+		}
+
+		if (questionsForCategory.isEmpty()) {
+			throw new IllegalStateException("No further questions for category: " + category);
+		}
+
+		return questionsForCategory.removeFirst();
+	}
+
+}
+
+public class Game {
+
+	private static final int MAXIMUM_NUMBER_OF_PLAYERS_ALLOWED = 5;
+
+	private List<Player> players = new ArrayList<>();
+
+	private QuestionBank questionBank;
+
+	private int currentPlayerIndex = 0;
+
+	public Game() {
+		questionBank = new QuestionBank();
+
 	}
 
 	public boolean add(String playerName) {
@@ -150,22 +173,8 @@ public class Game {
 	void askQuestion() {
 		Category category = getCategory(getCurrentPlayer().getPlace());
 		System.out.println("The category is " + getCategory(getCurrentPlayer().getPlace()));
-		String question = (String) getNextQuestion(category);
+		String question = (String) questionBank.getNextQuestion(category);
 		System.out.println(question);
-	}
-
-	String getNextQuestion(Category category) {
-		LinkedList<String> questionsForCategory = questions.get(category);
-
-		if (questionsForCategory == null) {
-			return null;
-		}
-
-		if (questionsForCategory.isEmpty()) {
-			throw new IllegalStateException("No further questions for category: " + category);
-		}
-
-		return questionsForCategory.removeFirst();
 	}
 
 	Category getCategory(int playerPlace) {

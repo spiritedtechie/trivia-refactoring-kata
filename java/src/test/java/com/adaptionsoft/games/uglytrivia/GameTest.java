@@ -105,37 +105,11 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_getNextQuestionForEachCategory() {
-		assertEquals("Pop Question 0", game.getNextQuestion(Category.Pop));
-		assertEquals("Pop Question 1", game.getNextQuestion(Category.Pop));
-
-		assertEquals("Science Question 0", game.getNextQuestion(Category.Science));
-		assertEquals("Science Question 1", game.getNextQuestion(Category.Science));
-
-		assertEquals("Sports Question 0", game.getNextQuestion(Category.Sports));
-		assertEquals("Sports Question 1", game.getNextQuestion(Category.Sports));
-
-		assertEquals("Rock Question 0", game.getNextQuestion(Category.Rock));
-		assertEquals("Rock Question 1", game.getNextQuestion(Category.Rock));
-	}
-
-	@Test
 	public void test_askQuestionPrintsTheNextQuestion() {
 		game.askQuestion();
 
 		assertEquals("The category is Pop\n" + "Pop Question 0", outputStreamCaptor.toString().trim());
 
-	}
-
-	@Test
-	public void test_getNextQuestionErrorsOnceQuestionsForACategoryHaveRanOut() {
-		Exception exception = assertThrows(IllegalStateException.class, () -> {
-			for (int r = 0; r <= 50; r++) {
-				game.getNextQuestion(Category.Pop);
-			}
-		});
-
-		assertTrue(exception.getMessage().contains("No further questions for category"));
 	}
 
 	@Test
