@@ -16,35 +16,35 @@ class Player {
 		this.name = name;
 	}
 
-	public String getName() {
+	String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	void setName(String name) {
 		this.name = name;
 	}
 
-	public int getPlace() {
+	int getPlace() {
 		return place;
 	}
 
-	public void setPlace(int place) {
+	void setPlace(int place) {
 		this.place = place;
 	}
 
-	public int getPurse() {
+	int getPurse() {
 		return purse;
 	}
 
-	public void addToPurse(int coins) {
+	void addToPurse(int coins) {
 		this.purse += coins;
 	}
 
-	public boolean isInPenaltyBox() {
+	boolean isInPenaltyBox() {
 		return inPenaltyBox;
 	}
 
-	public void setInPenaltyBox(boolean inPenaltyBox) {
+	void setInPenaltyBox(boolean inPenaltyBox) {
 		this.inPenaltyBox = inPenaltyBox;
 	}
 
