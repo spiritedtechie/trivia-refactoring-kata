@@ -287,4 +287,51 @@ public class GameTest {
 		assertTrue(game.inPenaltyBox(playerNo));
 	}
 
+	@Test
+	public void integration_test_roll_wherePlayerNotInPenaltyBox() {
+
+		assertEquals(0, game.players.get(0).getPlace());
+
+		game.roll(6);
+
+		assertEquals(6, game.players.get(0).getPlace());
+		assertEquals("Bob is the current player\n" + //
+				"They have rolled a 6\n" + //
+				"Bob's new location is 6\n" + //
+				"The category is Sports\n" + //
+				"Sports Question 0", outputStreamCaptor.toString().trim());
+	}
+
+	@Test
+	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidNotRollAnOddNumberSoStaysInPenaltyBox() {
+
+		game.players.get(0).setInPenaltyBox(true);
+		assertEquals(0, game.players.get(0).getPlace());
+
+		game.roll(6);
+
+		assertEquals(0, game.players.get(0).getPlace());
+		assertEquals("Bob is the current player\n" + //
+				"They have rolled a 6\n" + //
+				"Bob is not getting out of the penalty box", outputStreamCaptor.toString().trim());
+		assertFalse(game.isGettingOutOfPenaltyBox);
+
+	}
+
+	@Test
+	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidRollAnOddNumberSoGetsOutOfPenaltyBox() {
+
+		game.players.get(0).setInPenaltyBox(true);
+		assertEquals(0, game.players.get(0).getPlace());
+
+		game.roll(5);
+
+		assertEquals(5, game.players.get(0).getPlace());
+		assertEquals("Bob is the current player\n" + //
+				"They have rolled a 5\n" + //
+				"Bob's new location is 5\n" + //
+				"The category is Science\n" + //
+				"Science Question 0", outputStreamCaptor.toString().trim());
+		assertTrue(game.isGettingOutOfPenaltyBox);
+	}
 }

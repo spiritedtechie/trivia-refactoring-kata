@@ -101,8 +101,11 @@ public class Game {
 		System.out.println(getPlayerName(currentPlayer) + " is the current player");
 		System.out.println("They have rolled a " + roll);
 
+		boolean isOddRoll = roll % 2 != 0;
+
 		if (inPenaltyBox(currentPlayer)) {
-			if (roll % 2 != 0) {
+
+			if (isOddRoll) {
 				isGettingOutOfPenaltyBox = true;
 
 				updateNextPlace(currentPlayer, roll);
