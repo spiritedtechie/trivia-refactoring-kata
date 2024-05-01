@@ -13,6 +13,7 @@ enum Category {
 
 class Player {
 	private static final int WINNING_PURSE_AMOUNT = 6;
+	private static final int TOTAL_PLACES = 12;
 
 	private String name;
 	private int place = 0;
@@ -48,7 +49,7 @@ class Player {
 	}
 
 	void updateNextPlace(int roll) {
-		this.place = ((place + roll) % 12);
+		this.place = (place + roll) % TOTAL_PLACES;
 	}
 
 	boolean didPlayerWin() {
