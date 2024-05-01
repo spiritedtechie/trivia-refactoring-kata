@@ -1,10 +1,9 @@
 package com.adaptionsoft.games.uglytrivia;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 enum Category {
 	Pop, Science, Sports, Rock
@@ -72,7 +71,7 @@ public class Game {
 
 	private List<Player> players = new ArrayList<>();
 
-	private Map<Category, LinkedList<String>> questions = new HashMap<>();
+	private EnumMap<Category, LinkedList<String>> questions = new EnumMap<>(Category.class);
 
 	private int currentPlayerIndex = 0;
 
