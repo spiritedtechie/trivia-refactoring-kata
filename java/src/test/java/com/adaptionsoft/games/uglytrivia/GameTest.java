@@ -220,28 +220,31 @@ public class GameTest {
 	@Test
 	public void test_didPlayerWin_False_whenPurseLessThan6() {
 		int playerNo = 1;
+		Player player = game.players.get(playerNo);
 
 		addCoinsToPurse(playerNo, 5);
 
-		assertFalse(game.didPlayerWin(playerNo));
+		assertFalse(player.didPlayerWin());
 	}
 
 	@Test
 	public void test_didPlayerWin_false_whenPurseGreaterThan6() {
 		int playerNo = 1;
+		Player player = game.players.get(playerNo);
 
 		addCoinsToPurse(playerNo, 7);
 
-		assertFalse(game.didPlayerWin(playerNo));
+		assertFalse(player.didPlayerWin());
 	}
 
 	@Test
 	public void test_didPlayerWin_true_whenPurseEqualToSix() {
 		int playerNo = 1;
+		Player player = game.players.get(playerNo);
 
 		addCoinsToPurse(playerNo, 6);
 
-		assertTrue(game.didPlayerWin(playerNo));
+		assertTrue(player.didPlayerWin());
 	}
 
 	private void addCoinsToPurse(int playerNo, int coinCount) {

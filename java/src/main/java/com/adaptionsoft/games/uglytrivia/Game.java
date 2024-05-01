@@ -55,6 +55,10 @@ class Player {
 		setPlace(newPlace);
 	}
 
+	boolean didPlayerWin() {
+		return getPurse() == 6;
+	}
+
 }
 
 public class Game {
@@ -185,7 +189,7 @@ public class Game {
 			current.addToPurse(1);
 			System.out.println(current.getName() + " now has " + current.getPurse() + " Gold Coins.");
 
-			boolean notWinner = !didPlayerWin(currentPlayer);
+			boolean notWinner = !current.didPlayerWin();
 			goToNextPlayer();
 
 			return notWinner;
@@ -205,11 +209,6 @@ public class Game {
 
 		goToNextPlayer();
 		return true;
-	}
-
-	boolean didPlayerWin(int playerNumber) {
-		Player player = players.get(playerNumber);
-		return player.getPurse() == 6;
 	}
 
 	void putInPenaltyBox(int playerNumber) {
