@@ -101,14 +101,6 @@ public class Game {
 		return true;
 	}
 
-	int numberOfPlayers() {
-		return players.size();
-	}
-
-	Player getCurrentPlayer() {
-		return players.get(currentPlayerIndex);
-	}
-
 	public void rollDice(int roll) {
 		Player player = getCurrentPlayer();
 
@@ -125,6 +117,34 @@ public class Game {
 			System.out.println(player.getName() + "'s new location is " + player.getPlace());
 			askQuestion();
 		}
+	}
+
+	public boolean wasCorrectlyAnswered() {
+		Player player = getCurrentPlayer();
+		if (player.isInPenaltyBox()) {
+			goToNextPlayer();
+			return true;
+		} else {
+			player.addToPurse(1);
+			boolean notWinner = !player.didPlayerWin();
+			goToNextPlayer();
+
+			System.out.println("Answer was correct!!!!");
+			System.out.println(player.getName() + " now has " + player.getPurse() + " Gold Coins.");
+
+			return notWinner;
+		}
+	}
+
+	public boolean wrongAnswer() {
+		Player player = getCurrentPlayer();
+		player.setInPenaltyBox(true);
+		goToNextPlayer();
+
+		System.out.println("Question was incorrectly answered");
+		System.out.println(player.getName() + " was sent to the penalty box");
+
+		return true;
 	}
 
 	void askQuestion() {
@@ -167,35 +187,15 @@ public class Game {
 		}
 	}
 
-	public boolean wasCorrectlyAnswered() {
-		Player player = getCurrentPlayer();
-		if (player.isInPenaltyBox()) {
-			goToNextPlayer();
-			return true;
-		} else {
-			player.addToPurse(1);
-			boolean notWinner = !player.didPlayerWin();
-			goToNextPlayer();
+	int numberOfPlayers() {
+		return players.size();
+	}
 
-			System.out.println("Answer was correct!!!!");
-			System.out.println(player.getName() + " now has " + player.getPurse() + " Gold Coins.");
-
-			return notWinner;
-		}
+	Player getCurrentPlayer() {
+		return players.get(currentPlayerIndex);
 	}
 
 	void goToNextPlayer() {
 		currentPlayerIndex = (currentPlayerIndex + 1) % numberOfPlayers();
-	}
-
-	public boolean wrongAnswer() {
-		Player player = getCurrentPlayer();
-		player.setInPenaltyBox(true);
-		goToNextPlayer();
-
-		System.out.println("Question was incorrectly answered");
-		System.out.println(player.getName() + " was sent to the penalty box");
-
-		return true;
 	}
 }
