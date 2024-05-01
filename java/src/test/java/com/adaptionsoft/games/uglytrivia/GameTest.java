@@ -62,31 +62,33 @@ public class GameTest {
 
 	@Test
 	public void test_updateNextPlaceIsCurrentPlacePlusTheRollValue() {
-		game.updateNextPlace(0, 2);
+		int playerNo = 0;
+		Player player = game.players.get(playerNo);
 
-		assertEquals(2, game.players.get(0).getPlace());
+		player.updateNextPlace(2);
+
+		assertEquals(2, player.getPlace());
 
 	}
 
 	@Test
 	public void test_updateNextPlaceCannotExceed11AndCirclesBackRound() {
-		game.updateNextPlace(0, 12);
+		int playerNo = 0;
+		Player player = game.players.get(playerNo);
 
-		assertEquals(0, game.players.get(0).getPlace());
+		player.updateNextPlace(12);
+
+		assertEquals(0, player.getPlace());
 	}
 
 	@Test
 	public void test_updateNextPlaceMaxesAt11() {
-		game.updateNextPlace(0, 11);
+		int playerNo = 0;
+		Player player = game.players.get(playerNo);
 
-		assertEquals(11, game.players.get(0).getPlace());
-	}
+		player.updateNextPlace(11);
 
-	@Test
-	public void test_updateNextPlacePrintsPlayersNextPlace() {
-		game.updateNextPlace(0, 2);
-
-		assertEquals("Bob's new location is 2", outputStreamCaptor.toString().trim());
+		assertEquals(11, player.getPlace());
 	}
 
 	@Test

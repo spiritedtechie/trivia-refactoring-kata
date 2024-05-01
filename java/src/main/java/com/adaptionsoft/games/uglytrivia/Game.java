@@ -47,6 +47,13 @@ class Player {
 	public void setInPenaltyBox(boolean inPenaltyBox) {
 		this.inPenaltyBox = inPenaltyBox;
 	}
+
+	void updateNextPlace(int roll) {
+		Integer newPlace = getPlace() + roll;
+		if (newPlace > 11)
+			newPlace = newPlace - 12;
+		setPlace(newPlace);
+	}
 }
 
 public class Game {
@@ -108,7 +115,8 @@ public class Game {
 			System.out.println(currPlayer.getName() + " is not getting out of the penalty box");
 		} else {
 			currPlayer.setInPenaltyBox(false);
-			updateNextPlace(currentPlayer, roll);
+			currPlayer.updateNextPlace(roll);
+			System.out.println(currPlayer.getName() + "'s new location is " + currPlayer.getPlace());
 			askQuestion();
 		}
 	}
@@ -123,18 +131,6 @@ public class Game {
 		}
 
 		return players.get(playerNumber).getName();
-	}
-
-	void updateNextPlace(int playerNumber, int roll) {
-		Player player = players.get(playerNumber);
-		Integer newPlace = player.getPlace() + roll;
-		if (newPlace > 11)
-			newPlace = newPlace - 12;
-		player.setPlace(newPlace);
-
-		System.out.println(getPlayerName(playerNumber)
-				+ "'s new location is "
-				+ player.getPlace());
 	}
 
 	void askQuestion() {
