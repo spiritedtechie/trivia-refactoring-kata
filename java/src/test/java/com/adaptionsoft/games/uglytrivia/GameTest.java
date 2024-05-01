@@ -334,4 +334,53 @@ public class GameTest {
 				"Science Question 0", outputStreamCaptor.toString().trim());
 		assertTrue(game.isGettingOutOfPenaltyBox);
 	}
+
+	@Test
+	public void integration_test_wasCorrectlyAnswered_wherePlayerNotInPenaltyBox() {
+
+		game.players.get(0).setInPenaltyBox(false);
+		assertEquals(0, game.currentPlayer);
+		assertEquals(0, game.players.get(0).getPurse());
+
+		boolean wasNotWinner = game.wasCorrectlyAnswered();
+
+		assertEquals(1, game.players.get(0).getPurse());
+		assertEquals("Answer was correct!!!!\n" + //
+				"Bob now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
+		assertTrue(wasNotWinner);
+		assertEquals(1, game.currentPlayer);
+	}
+
+	@Test
+	public void integration_test_wasCorrectlyAnswered_wherePlayerInPenaltyBoxAndGettingOut() {
+
+		game.players.get(0).setInPenaltyBox(true);
+		game.isGettingOutOfPenaltyBox = true;
+		assertEquals(0, game.currentPlayer);
+		assertEquals(0, game.players.get(0).getPurse());
+
+		boolean wasNotWinner = game.wasCorrectlyAnswered();
+
+		assertEquals(1, game.players.get(0).getPurse());
+		assertEquals("Answer was correct!!!!\n" + //
+				"Bob now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
+		assertTrue(wasNotWinner);
+		assertEquals(1, game.currentPlayer);
+	}
+
+	@Test
+	public void integration_test_wasCorrectlyAnswered_wherePlayerInPenaltyBoxAndNotGettingOut() {
+
+		game.players.get(0).setInPenaltyBox(true);
+		game.isGettingOutOfPenaltyBox = false;
+		assertEquals(0, game.currentPlayer);
+		assertEquals(0, game.players.get(0).getPurse());
+
+		boolean wasNotWinner = game.wasCorrectlyAnswered();
+
+		assertEquals(0, game.players.get(0).getPurse());
+		assertEquals("", outputStreamCaptor.toString().trim());
+		assertTrue(wasNotWinner);
+		assertEquals(1, game.currentPlayer);
+	}
 }

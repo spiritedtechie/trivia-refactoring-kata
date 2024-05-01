@@ -200,7 +200,7 @@ public class Game {
 
 		} else {
 
-			System.out.println("Answer was corrent!!!!");
+			System.out.println("Answer was correct!!!!");
 			addCoinToPurse(currentPlayer);
 
 			boolean notWinner = !didPlayerWin(currentPlayer);
