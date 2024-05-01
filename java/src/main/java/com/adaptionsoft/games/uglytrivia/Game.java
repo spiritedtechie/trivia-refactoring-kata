@@ -173,13 +173,12 @@ public class Game {
 			goToNextPlayer();
 			return true;
 		} else {
-
-			System.out.println("Answer was correct!!!!");
 			player.addToPurse(1);
-			System.out.println(player.getName() + " now has " + player.getPurse() + " Gold Coins.");
-
 			boolean notWinner = !player.didPlayerWin();
 			goToNextPlayer();
+
+			System.out.println("Answer was correct!!!!");
+			System.out.println(player.getName() + " now has " + player.getPurse() + " Gold Coins.");
 
 			return notWinner;
 		}
@@ -193,11 +192,12 @@ public class Game {
 
 	public boolean wrongAnswer() {
 		Player player = getCurrentPlayer();
+		player.setInPenaltyBox(true);
+		goToNextPlayer();
+
 		System.out.println("Question was incorrectly answered");
 		System.out.println(player.getName() + " was sent to the penalty box");
-		player.setInPenaltyBox(true);
-
-		goToNextPlayer();
+		
 		return true;
 	}
 }
