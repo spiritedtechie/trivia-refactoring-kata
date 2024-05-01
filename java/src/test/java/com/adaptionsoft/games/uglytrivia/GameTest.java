@@ -2,7 +2,6 @@ package com.adaptionsoft.games.uglytrivia;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -90,39 +89,34 @@ public class GameTest {
 
 	@Test
 	public void test_getCategoryBasedOnPlayerPlace() {
-		assertEquals("Pop", game.getCategory(0));
-		assertEquals("Science", game.getCategory(1));
-		assertEquals("Sports", game.getCategory(2));
-		assertEquals("Rock", game.getCategory(3));
-		assertEquals("Pop", game.getCategory(4));
-		assertEquals("Science", game.getCategory(5));
-		assertEquals("Sports", game.getCategory(6));
-		assertEquals("Rock", game.getCategory(7));
-		assertEquals("Pop", game.getCategory(8));
-		assertEquals("Science", game.getCategory(9));
-		assertEquals("Sports", game.getCategory(10));
-		assertEquals("Rock", game.getCategory(11));
-		assertEquals("Rock", game.getCategory(12));
+		assertEquals(Category.Pop, game.getCategory(0));
+		assertEquals(Category.Science, game.getCategory(1));
+		assertEquals(Category.Sports, game.getCategory(2));
+		assertEquals(Category.Rock, game.getCategory(3));
+		assertEquals(Category.Pop, game.getCategory(4));
+		assertEquals(Category.Science, game.getCategory(5));
+		assertEquals(Category.Sports, game.getCategory(6));
+		assertEquals(Category.Rock, game.getCategory(7));
+		assertEquals(Category.Pop, game.getCategory(8));
+		assertEquals(Category.Science, game.getCategory(9));
+		assertEquals(Category.Sports, game.getCategory(10));
+		assertEquals(Category.Rock, game.getCategory(11));
+		assertEquals(Category.Rock, game.getCategory(12));
 	}
 
 	@Test
 	public void test_getNextQuestionForEachCategory() {
-		assertEquals("Pop Question 0", game.getNextQuestion("Pop"));
-		assertEquals("Pop Question 1", game.getNextQuestion("Pop"));
+		assertEquals("Pop Question 0", game.getNextQuestion(Category.Pop));
+		assertEquals("Pop Question 1", game.getNextQuestion(Category.Pop));
 
-		assertEquals("Science Question 0", game.getNextQuestion("Science"));
-		assertEquals("Science Question 1", game.getNextQuestion("Science"));
+		assertEquals("Science Question 0", game.getNextQuestion(Category.Science));
+		assertEquals("Science Question 1", game.getNextQuestion(Category.Science));
 
-		assertEquals("Sports Question 0", game.getNextQuestion("Sports"));
-		assertEquals("Sports Question 1", game.getNextQuestion("Sports"));
+		assertEquals("Sports Question 0", game.getNextQuestion(Category.Sports));
+		assertEquals("Sports Question 1", game.getNextQuestion(Category.Sports));
 
-		assertEquals("Rock Question 0", game.getNextQuestion("Rock"));
-		assertEquals("Rock Question 1", game.getNextQuestion("Rock"));
-	}
-
-	@Test
-	public void test_getNextQuestionIsEmptyForUnknownCategory() {
-		assertNull(game.getNextQuestion("Unknown"));
+		assertEquals("Rock Question 0", game.getNextQuestion(Category.Rock));
+		assertEquals("Rock Question 1", game.getNextQuestion(Category.Rock));
 	}
 
 	@Test
@@ -137,7 +131,7 @@ public class GameTest {
 	public void test_getNextQuestionErrorsOnceQuestionsForACategoryHaveRanOut() {
 		Exception exception = assertThrows(IllegalStateException.class, () -> {
 			for (int r = 0; r <= 50; r++) {
-				game.getNextQuestion("Pop");
+				game.getNextQuestion(Category.Pop);
 			}
 		});
 

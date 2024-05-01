@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+enum Category {
+	Pop, Science, Sports, Rock
+}
+
 class Player {
 	private String name;
 	private int place = 0;
@@ -65,7 +69,7 @@ public class Game {
 
 	private List<Player> players = new ArrayList<>();
 
-	private Map<String, LinkedList<String>> questions = new HashMap<>();
+	private Map<Category, LinkedList<String>> questions = new HashMap<>();
 
 	private int currentPlayerIndex = 0;
 
@@ -74,22 +78,13 @@ public class Game {
 	}
 
 	private void initialiseQuestions() {
-		LinkedList<String> popQuestions = new LinkedList<String>();
-		LinkedList<String> scienceQuestions = new LinkedList<String>();
-		LinkedList<String> sportsQuestions = new LinkedList<String>();
-		LinkedList<String> rockQuestions = new LinkedList<String>();
-
-		for (int i = 0; i < 50; i++) {
-			popQuestions.addLast("Pop Question " + i);
-			scienceQuestions.addLast(("Science Question " + i));
-			sportsQuestions.addLast(("Sports Question " + i));
-			rockQuestions.addLast("Rock Question " + i);
+		for (Category category : Category.values()) {
+			LinkedList<String> categoryQuestions = new LinkedList<String>();
+			for (int i = 0; i < 50; i++) {
+				categoryQuestions.addLast(category.name() + " Question " + i);
+			}
+			questions.put(category, categoryQuestions);
 		}
-
-		questions.put("Pop", popQuestions);
-		questions.put("Science", scienceQuestions);
-		questions.put("Sports", sportsQuestions);
-		questions.put("Rock", rockQuestions);
 	}
 
 	public boolean add(String playerName) {
@@ -131,13 +126,13 @@ public class Game {
 	}
 
 	void askQuestion() {
-		String category = getCategory(getCurrentPlayer().getPlace());
+		Category category = getCategory(getCurrentPlayer().getPlace());
 		System.out.println("The category is " + getCategory(getCurrentPlayer().getPlace()));
 		String question = (String) getNextQuestion(category);
 		System.out.println(question);
 	}
 
-	Object getNextQuestion(String category) {
+	String getNextQuestion(Category category) {
 		LinkedList<String> questionsForCategory = questions.get(category);
 
 		if (questionsForCategory == null) {
@@ -151,22 +146,22 @@ public class Game {
 		return questionsForCategory.removeFirst();
 	}
 
-	String getCategory(int playerPlace) {
+	Category getCategory(int playerPlace) {
 		switch (playerPlace) {
 			case 0:
 			case 4:
 			case 8:
-				return "Pop";
+				return Category.Pop;
 			case 1:
 			case 5:
 			case 9:
-				return "Science";
+				return Category.Science;
 			case 2:
 			case 6:
 			case 10:
-				return "Sports";
+				return Category.Sports;
 			default:
-				return "Rock";
+				return Category.Rock;
 		}
 	}
 
