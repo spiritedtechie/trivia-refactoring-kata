@@ -37,11 +37,11 @@ public class GameTest {
 
 	@Test
 	public void test_goToNextPlayerCannotExceedNumberOfPlayers() throws Exception {
-		assertEquals(0, game.currentPlayer);
+		assertEquals("Bob", game.getCurrentPlayer().getName());
 		game.goToNextPlayer();
-		assertEquals(1, game.currentPlayer);
+		assertEquals("John", game.getCurrentPlayer().getName());
 		game.goToNextPlayer();
-		assertEquals(0, game.currentPlayer);
+		assertEquals("Bob", game.getCurrentPlayer().getName());
 	}
 
 	@Test
@@ -288,7 +288,6 @@ public class GameTest {
 
 	@Test
 	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidRollAnOddNumberSoGetsOutOfPenaltyBox() {
-
 		Player player = game.players.get(0);
 		player.setInPenaltyBox(true);
 		assertEquals(0, player.getPlace());
@@ -306,10 +305,9 @@ public class GameTest {
 
 	@Test
 	public void integration_test_wasCorrectlyAnswered_wherePlayerNotInPenaltyBox() {
-
 		Player player = game.players.get(0);
 		player.setInPenaltyBox(false);
-		assertEquals(0, game.currentPlayer);
+		assertEquals(player, game.getCurrentPlayer());
 		assertEquals(0, player.getPurse());
 
 		boolean wasNotWinner = game.wasCorrectlyAnswered();
@@ -318,17 +316,15 @@ public class GameTest {
 		assertEquals("Answer was correct!!!!\n" + //
 				"Bob now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
 		assertTrue(wasNotWinner);
-		assertEquals(1, game.currentPlayer);
+		assertEquals("John", game.getCurrentPlayer().getName());
 		assertFalse(player.isInPenaltyBox());
-
 	}
 
 	@Test
 	public void integration_test_wasCorrectlyAnswered_wherePlayerInPenaltyBox() {
-
 		Player player = game.players.get(0);
 		player.setInPenaltyBox(true);
-		assertEquals(0, game.currentPlayer);
+		assertEquals(player, game.getCurrentPlayer());
 		assertEquals(0, player.getPurse());
 
 		boolean wasNotWinner = game.wasCorrectlyAnswered();
@@ -336,7 +332,7 @@ public class GameTest {
 		assertEquals(0, player.getPurse());
 		assertEquals("", outputStreamCaptor.toString().trim());
 		assertTrue(wasNotWinner);
-		assertEquals(1, game.currentPlayer);
+		assertEquals("John", game.getCurrentPlayer().getName());
 		assertTrue(player.isInPenaltyBox());
 	}
 
@@ -344,7 +340,7 @@ public class GameTest {
 	public void integration_test_wrongAnswer() {
 		Player player = game.players.get(0);
 		player.setInPenaltyBox(false);
-		assertEquals(0, game.currentPlayer);
+		assertEquals(player, game.getCurrentPlayer());
 
 		boolean wasNotWinner = game.wrongAnswer();
 
@@ -352,7 +348,7 @@ public class GameTest {
 		assertEquals("Question was incorrectly answered\n" + //
 				"Bob was sent to the penalty box", outputStreamCaptor.toString().trim());
 		assertTrue(wasNotWinner);
-		assertEquals(1, game.currentPlayer);
+		assertEquals("John", game.getCurrentPlayer().getName());
 		assertTrue(player.isInPenaltyBox());
 	}
 }

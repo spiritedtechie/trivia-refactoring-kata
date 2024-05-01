@@ -67,7 +67,7 @@ public class Game {
 
 	private Map<String, LinkedList<String>> questions = new HashMap<>();
 
-	int currentPlayer = 0;
+	private int currentPlayer = 0;
 
 	public Game() {
 		LinkedList<String> popQuestions = new LinkedList<String>();
@@ -105,7 +105,7 @@ public class Game {
 		return players.size();
 	}
 
-	private Player getCurrentPlayer() {
+	Player getCurrentPlayer() {
 		return players.get(currentPlayer);
 	}
 
@@ -197,7 +197,7 @@ public class Game {
 
 		System.out.println("Question was incorrectly answered");
 		System.out.println(player.getName() + " was sent to the penalty box");
-		
+
 		return true;
 	}
 }
