@@ -35,4 +35,21 @@ public class QuestionBankTest {
 
 		assertTrue(exception.getMessage().contains("No further questions for category"));
 	}
+
+	@Test
+	public void test_getCategoryBasedOnPlayerPlace() {
+		assertEquals(Category.Pop, QuestionBank.getCategory(0));
+		assertEquals(Category.Science, QuestionBank.getCategory(1));
+		assertEquals(Category.Sports, QuestionBank.getCategory(2));
+		assertEquals(Category.Rock, QuestionBank.getCategory(3));
+		assertEquals(Category.Pop, QuestionBank.getCategory(4));
+		assertEquals(Category.Science, QuestionBank.getCategory(5));
+		assertEquals(Category.Sports, QuestionBank.getCategory(6));
+		assertEquals(Category.Rock, QuestionBank.getCategory(7));
+		assertEquals(Category.Pop, QuestionBank.getCategory(8));
+		assertEquals(Category.Science, QuestionBank.getCategory(9));
+		assertEquals(Category.Sports, QuestionBank.getCategory(10));
+		assertEquals(Category.Rock, QuestionBank.getCategory(11));
+		assertEquals(Category.Rock, QuestionBank.getCategory(12));
+	}
 }

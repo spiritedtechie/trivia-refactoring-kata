@@ -88,28 +88,10 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_getCategoryBasedOnPlayerPlace() {
-		assertEquals(Category.Pop, game.getCategory(0));
-		assertEquals(Category.Science, game.getCategory(1));
-		assertEquals(Category.Sports, game.getCategory(2));
-		assertEquals(Category.Rock, game.getCategory(3));
-		assertEquals(Category.Pop, game.getCategory(4));
-		assertEquals(Category.Science, game.getCategory(5));
-		assertEquals(Category.Sports, game.getCategory(6));
-		assertEquals(Category.Rock, game.getCategory(7));
-		assertEquals(Category.Pop, game.getCategory(8));
-		assertEquals(Category.Science, game.getCategory(9));
-		assertEquals(Category.Sports, game.getCategory(10));
-		assertEquals(Category.Rock, game.getCategory(11));
-		assertEquals(Category.Rock, game.getCategory(12));
-	}
-
-	@Test
 	public void test_askQuestionPrintsTheNextQuestion() {
 		game.askQuestion();
 
 		assertEquals("The category is Pop\n" + "Pop Question 0", outputStreamCaptor.toString().trim());
-
 	}
 
 	@Test

@@ -1,5 +1,7 @@
 package com.adaptionsoft.games.uglytrivia;
 
+import static com.adaptionsoft.games.uglytrivia.QuestionBank.getCategory;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -85,6 +87,25 @@ class QuestionBank {
 		}
 
 		return questionsForCategory.removeFirst();
+	}
+
+	static Category getCategory(int playerPlace) {
+		switch (playerPlace) {
+			case 0:
+			case 4:
+			case 8:
+				return Category.Pop;
+			case 1:
+			case 5:
+			case 9:
+				return Category.Science;
+			case 2:
+			case 6:
+			case 10:
+				return Category.Sports;
+			default:
+				return Category.Rock;
+		}
 	}
 
 }
@@ -175,25 +196,6 @@ public class Game {
 		System.out.println("The category is " + getCategory(getCurrentPlayer().getPlace()));
 		String question = (String) questionBank.getNextQuestion(category);
 		System.out.println(question);
-	}
-
-	Category getCategory(int playerPlace) {
-		switch (playerPlace) {
-			case 0:
-			case 4:
-			case 8:
-				return Category.Pop;
-			case 1:
-			case 5:
-			case 9:
-				return Category.Science;
-			case 2:
-			case 6:
-			case 10:
-				return Category.Sports;
-			default:
-				return Category.Rock;
-		}
 	}
 
 	int numberOfPlayers() {
