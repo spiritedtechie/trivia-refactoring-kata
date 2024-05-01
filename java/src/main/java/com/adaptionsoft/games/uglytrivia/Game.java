@@ -62,6 +62,7 @@ class Player {
 }
 
 public class Game {
+
 	List<Player> players = new ArrayList<>();
 
 	private Map<String, LinkedList<String>> questions = new HashMap<>();
@@ -128,14 +129,6 @@ public class Game {
 
 	private Player getCurrentPlayer() {
 		return players.get(currentPlayer);
-	}
-
-	Object getPlayerName(int playerNumber) {
-		if (playerNumber >= numberOfPlayers() || playerNumber < 0) {
-			throw new IllegalArgumentException("Invalid player number");
-		}
-
-		return players.get(playerNumber).getName();
 	}
 
 	void askQuestion() {
@@ -205,7 +198,7 @@ public class Game {
 	public boolean wrongAnswer() {
 		Player player = getCurrentPlayer();
 		System.out.println("Question was incorrectly answered");
-		System.out.println(getPlayerName(currentPlayer) + " was sent to the penalty box");
+		System.out.println(player.getName() + " was sent to the penalty box");
 		player.setInPenaltyBox(true);
 
 		goToNextPlayer();

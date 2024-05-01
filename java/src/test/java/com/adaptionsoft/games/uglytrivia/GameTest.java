@@ -149,28 +149,8 @@ public class GameTest {
 
 	@Test
 	public void test_getPlayerName() {
-		assertEquals("Bob", game.getPlayerName(0));
-		assertEquals("John", game.getPlayerName(1));
-	}
-
-	@Test
-	public void test_getPlayerNameThrowWhenPlayerNumberGreaterThanNumberOfPlayers() {
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-			game.getPlayerName(3);
-		});
-
-		assertTrue(exception.getMessage().contains("Invalid player number"));
-
-	}
-
-	@Test
-	public void test_getPlayerNameThrowWhenPlayerNumberNegative() {
-		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-			game.getPlayerName(-1);
-		});
-
-		assertTrue(exception.getMessage().contains("Invalid player number"));
-
+		assertEquals("Bob", game.players.get(0).getName());
+		assertEquals("John", game.players.get(1).getName());
 	}
 
 	@Test
