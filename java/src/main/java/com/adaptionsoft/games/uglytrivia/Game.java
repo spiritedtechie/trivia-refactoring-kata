@@ -70,6 +70,10 @@ public class Game {
 	private int currentPlayerIndex = 0;
 
 	public Game() {
+		initialiseQuestions();
+	}
+
+	private void initialiseQuestions() {
 		LinkedList<String> popQuestions = new LinkedList<String>();
 		LinkedList<String> scienceQuestions = new LinkedList<String>();
 		LinkedList<String> sportsQuestions = new LinkedList<String>();
