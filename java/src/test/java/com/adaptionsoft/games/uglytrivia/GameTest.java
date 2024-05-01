@@ -358,4 +358,20 @@ public class GameTest {
 		assertEquals(1, game.currentPlayer);
 		assertTrue(player.isInPenaltyBox());
 	}
+
+	@Test
+	public void integration_test_wrongAnswer() {
+		Player player = game.players.get(0);
+		player.setInPenaltyBox(false);
+		assertEquals(0, game.currentPlayer);
+
+		boolean wasNotWinner = game.wrongAnswer();
+
+		assertEquals(0, player.getPurse());
+		assertEquals("Question was incorrectly answered\n" + //
+				"Bob was sent to the penalty box", outputStreamCaptor.toString().trim());
+		assertTrue(wasNotWinner);
+		assertEquals(1, game.currentPlayer);
+		assertTrue(player.isInPenaltyBox());
+	}
 }
