@@ -63,7 +63,7 @@ class Player {
 
 public class Game {
 
-	List<Player> players = new ArrayList<>();
+	private List<Player> players = new ArrayList<>();
 
 	private Map<String, LinkedList<String>> questions = new HashMap<>();
 

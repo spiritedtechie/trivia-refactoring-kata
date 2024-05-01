@@ -62,8 +62,7 @@ public class GameTest {
 
 	@Test
 	public void test_updateNextPlaceIsCurrentPlacePlusTheRollValue() {
-		int playerNo = 0;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 
 		player.updateNextPlace(2);
 
@@ -73,8 +72,7 @@ public class GameTest {
 
 	@Test
 	public void test_updateNextPlaceCannotExceed11AndCirclesBackRound() {
-		int playerNo = 0;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 
 		player.updateNextPlace(12);
 
@@ -83,8 +81,7 @@ public class GameTest {
 
 	@Test
 	public void test_updateNextPlaceMaxesAt11() {
-		int playerNo = 0;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 
 		player.updateNextPlace(11);
 
@@ -149,8 +146,9 @@ public class GameTest {
 
 	@Test
 	public void test_getPlayerName() {
-		assertEquals("Bob", game.players.get(0).getName());
-		assertEquals("John", game.players.get(1).getName());
+		assertEquals("Bob", game.getCurrentPlayer().getName());
+		game.goToNextPlayer();
+		assertEquals("John", game.getCurrentPlayer().getName());
 	}
 
 	@Test
@@ -176,8 +174,7 @@ public class GameTest {
 
 	@Test
 	public void test_add1CoinToPurseForPlayer0() {
-		int playerNo = 0;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 		assertEquals(0, player.getPurse());
 
 		player.addToPurse(1);
@@ -187,8 +184,8 @@ public class GameTest {
 
 	@Test
 	public void test_add2CoinToPurseForPlayer1() {
-		int playerNo = 1;
-		Player player = game.players.get(playerNo);
+		game.goToNextPlayer();
+		Player player = game.getCurrentPlayer();
 		assertEquals(0, player.getPurse());
 
 		player.addToPurse(1);
@@ -199,36 +196,32 @@ public class GameTest {
 
 	@Test
 	public void test_didPlayerWin_False_whenPurseLessThan6() {
-		int playerNo = 1;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 
-		addCoinsToPurse(playerNo, 5);
+		addCoinsToPurse(player, 5);
 
 		assertFalse(player.didPlayerWin());
 	}
 
 	@Test
 	public void test_didPlayerWin_false_whenPurseGreaterThan6() {
-		int playerNo = 1;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 
-		addCoinsToPurse(playerNo, 7);
+		addCoinsToPurse(player, 7);
 
 		assertFalse(player.didPlayerWin());
 	}
 
 	@Test
 	public void test_didPlayerWin_true_whenPurseEqualToSix() {
-		int playerNo = 1;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 
-		addCoinsToPurse(playerNo, 6);
+		addCoinsToPurse(player, 6);
 
 		assertTrue(player.didPlayerWin());
 	}
 
-	private void addCoinsToPurse(int playerNo, int coinCount) {
-		Player player = game.players.get(playerNo);
+	private void addCoinsToPurse(Player player, int coinCount) {
 		for (int times = 1; times <= coinCount; times++) {
 			player.addToPurse(1);
 		}
@@ -236,16 +229,14 @@ public class GameTest {
 
 	@Test
 	public void test_inPenaltyBox_false() {
-		int playerNo = 1;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 
 		assertFalse(player.isInPenaltyBox());
 	}
 
 	@Test
 	public void test_inPenaltyBox_true() {
-		int playerNo = 1;
-		Player player = game.players.get(playerNo);
+		Player player = game.getCurrentPlayer();
 		assertFalse(player.isInPenaltyBox());
 
 		player.setInPenaltyBox(true);
@@ -255,8 +246,7 @@ public class GameTest {
 
 	@Test
 	public void integration_test_roll_wherePlayerNotInPenaltyBox() {
-
-		Player player = game.players.get(0);
+		Player player = game.getCurrentPlayer();
 		assertEquals(0, player.getPlace());
 
 		game.roll(6);
@@ -271,8 +261,7 @@ public class GameTest {
 
 	@Test
 	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidNotRollAnOddNumberSoStaysInPenaltyBox() {
-
-		Player player = game.players.get(0);
+		Player player = game.getCurrentPlayer();
 		player.setInPenaltyBox(true);
 		assertEquals(0, player.getPlace());
 
@@ -283,12 +272,11 @@ public class GameTest {
 				"They have rolled a 6\n" + //
 				"Bob is not getting out of the penalty box", outputStreamCaptor.toString().trim());
 		assertTrue(player.isInPenaltyBox());
-
 	}
 
 	@Test
 	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidRollAnOddNumberSoGetsOutOfPenaltyBox() {
-		Player player = game.players.get(0);
+		Player player = game.getCurrentPlayer();
 		player.setInPenaltyBox(true);
 		assertEquals(0, player.getPlace());
 
@@ -305,7 +293,7 @@ public class GameTest {
 
 	@Test
 	public void integration_test_wasCorrectlyAnswered_wherePlayerNotInPenaltyBox() {
-		Player player = game.players.get(0);
+		Player player = game.getCurrentPlayer();
 		player.setInPenaltyBox(false);
 		assertEquals(player, game.getCurrentPlayer());
 		assertEquals(0, player.getPurse());
@@ -322,7 +310,7 @@ public class GameTest {
 
 	@Test
 	public void integration_test_wasCorrectlyAnswered_wherePlayerInPenaltyBox() {
-		Player player = game.players.get(0);
+		Player player = game.getCurrentPlayer();
 		player.setInPenaltyBox(true);
 		assertEquals(player, game.getCurrentPlayer());
 		assertEquals(0, player.getPurse());
@@ -338,7 +326,7 @@ public class GameTest {
 
 	@Test
 	public void integration_test_wrongAnswer() {
-		Player player = game.players.get(0);
+		Player player = game.getCurrentPlayer();
 		player.setInPenaltyBox(false);
 		assertEquals(player, game.getCurrentPlayer());
 
