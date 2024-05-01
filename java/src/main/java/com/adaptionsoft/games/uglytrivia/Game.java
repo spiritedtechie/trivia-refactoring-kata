@@ -79,10 +79,6 @@ class QuestionBank {
 	String getNextQuestion(Category category) {
 		LinkedList<String> questionsForCategory = questions.get(category);
 
-		if (questionsForCategory == null) {
-			return null;
-		}
-
 		if (questionsForCategory.isEmpty()) {
 			throw new IllegalStateException("No further questions for category: " + category);
 		}
