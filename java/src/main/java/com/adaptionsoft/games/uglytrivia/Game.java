@@ -25,16 +25,8 @@ class Player {
 		return name;
 	}
 
-	void setName(String name) {
-		this.name = name;
-	}
-
 	int getPlace() {
 		return place;
-	}
-
-	void setPlace(int place) {
-		this.place = place;
 	}
 
 	int getPurse() {
@@ -54,7 +46,7 @@ class Player {
 	}
 
 	void updateNextPlace(int roll) {
-		setPlace((place + roll) % 12);
+		this.place = ((place + roll) % 12);
 	}
 
 	boolean didPlayerWin() {
