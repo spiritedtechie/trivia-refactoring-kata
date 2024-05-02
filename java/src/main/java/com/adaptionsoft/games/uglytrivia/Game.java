@@ -198,12 +198,21 @@ public class Game {
 	}
 
 	/**
-	 * 
-	 * @return returns a fixed value of True for the play did NOT win. Reluctant to change
-	 *         a public interface method of this class. Ideally I would like to
-	 *         return isWinner=False instead, and have the client handle that case.
+	 * @deprecated use handleWrongeAnswer instead
+	 * @return returns a fixed value of True, negating the return from
+	 *         handleWrongAnswer
 	 */
+	@Deprecated
 	public boolean wrongAnswer() {
+		return !this.handleWrongAnswer();
+	}
+
+	/**
+	 * Handler for current player answering question incorrectly after roll
+	 * 
+	 * @return returns a fixed value of False for the play did win.
+	 */
+	public boolean handleWrongAnswer() {
 		Player player = getCurrentPlayer();
 		player.setInPenaltyBox(true);
 		goToNextPlayer();
@@ -211,7 +220,7 @@ public class Game {
 		System.out.println("Question was incorrectly answered");
 		System.out.println(player.getName() + " was sent to the penalty box");
 
-		return true;
+		return false;
 	}
 
 	void askQuestion() {
