@@ -171,16 +171,16 @@ public class Game {
 		if (player.isInPenaltyBox()) {
 			goToNextPlayer();
 			return true;
-		} else {
-			player.addToPurse(1);
-			boolean notWinner = !player.didPlayerWin();
-			goToNextPlayer();
-
-			System.out.println("Answer was correct!!!!");
-			System.out.println(player.getName() + " now has " + player.getPurse() + " Gold Coins.");
-
-			return notWinner;
 		}
+		
+		player.addToPurse(1);
+		boolean notWinner = !player.didPlayerWin();
+		goToNextPlayer();
+
+		System.out.println("Answer was correct!!!!");
+		System.out.println(player.getName() + " now has " + player.getPurse() + " Gold Coins.");
+
+		return notWinner;
 	}
 
 	/**
