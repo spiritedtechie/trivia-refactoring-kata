@@ -202,7 +202,7 @@ public class Game {
 
 	void askQuestion() {
 		Category category = getCategory(getCurrentPlayer().getPlace());
-		System.out.println("The category is " + getCategory(getCurrentPlayer().getPlace()));
+		System.out.println("The category is " + category);
 		String question = (String) questionBank.getNextQuestion(category);
 		System.out.println(question);
 	}
