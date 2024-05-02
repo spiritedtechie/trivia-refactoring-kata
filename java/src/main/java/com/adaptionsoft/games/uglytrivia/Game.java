@@ -147,6 +147,10 @@ public class Game {
 	 * @param roll
 	 */
 	public void rollDice(int roll) {
+		if (roll <= 0 || roll > 5) {
+			throw new IllegalArgumentException("Dice roll should be between 1 and 5 inclusive");
+		}
+
 		Player player = getCurrentPlayer();
 
 		System.out.println(player.getName() + " is the current player");

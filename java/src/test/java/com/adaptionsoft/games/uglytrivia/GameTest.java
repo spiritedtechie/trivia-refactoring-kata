@@ -92,14 +92,14 @@ public class GameTest {
 		Player player = game.getCurrentPlayer();
 		assertEquals(0, player.getPlace());
 
-		game.rollDice(6);
+		game.rollDice(5);
 
-		assertEquals(6, player.getPlace());
+		assertEquals(5, player.getPlace());
 		assertEquals("Bob is the current player\n" + //
-				"They have rolled a 6\n" + //
-				"Bob's new location is 6\n" + //
-				"The category is Sports\n" + //
-				"Sports Question 0", outputStreamCaptor.toString().trim());
+				"They have rolled a 5\n" + //
+				"Bob's new location is 5\n" + //
+				"The category is Science\n" + //
+				"Science Question 0", outputStreamCaptor.toString().trim());
 	}
 
 	@Test
@@ -108,11 +108,11 @@ public class GameTest {
 		player.setInPenaltyBox(true);
 		assertEquals(0, player.getPlace());
 
-		game.rollDice(6);
+		game.rollDice(4);
 
 		assertEquals(0, player.getPlace());
 		assertEquals("Bob is the current player\n" + //
-				"They have rolled a 6\n" + //
+				"They have rolled a 4\n" + //
 				"Bob is not getting out of the penalty box", outputStreamCaptor.toString().trim());
 		assertTrue(player.isInPenaltyBox());
 	}
@@ -132,6 +132,30 @@ public class GameTest {
 				"The category is Science\n" + //
 				"Science Question 0", outputStreamCaptor.toString().trim());
 		assertFalse(player.isInPenaltyBox());
+	}
+
+	@Test
+	public void integration_test_roll_whereRollAmountLessThan1() {
+		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+			game.rollDice(0);
+		});
+
+		String expectedMessage = "Dice roll should be between 1 and 5 inclusive";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(actualMessage.contains(expectedMessage));
+	}
+
+	@Test
+	public void integration_test_roll_whereRollAmountGreaterThan5() {
+		Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+			game.rollDice(6);
+		});
+
+		String expectedMessage = "Dice roll should be between 1 and 5 inclusive";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(actualMessage.contains(expectedMessage));
 	}
 
 	@Test
