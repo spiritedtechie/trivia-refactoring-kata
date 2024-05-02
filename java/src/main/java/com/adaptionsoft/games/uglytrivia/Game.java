@@ -134,14 +134,18 @@ public class Game {
 		return true;
 	}
 
-	/*
-	 * Use rollDice instead
+	/**
+	 * @deprecated use rollDice instead
 	 */
 	@Deprecated
 	public void roll(int roll) {
 		this.rollDice(roll);
 	}
 
+	/**
+	 * 
+	 * @param roll
+	 */
 	public void rollDice(int roll) {
 		Player player = getCurrentPlayer();
 
@@ -161,26 +165,36 @@ public class Game {
 	}
 
 	/**
-	 * 
-	 * @return returns whether the play did NOT win. Reluctant to change
-	 *         a public interface method of this class. Ideally I would like to
-	 *         return isWinner instead, and have the client handle that case.
+	 * @deprecated use handleCorrectAnswer instead, which is an interface breaking
+	 *             change as the returned boolean is reversed (see javadoc for
+	 *             return values)
+	 * @return returns whether the play did NOT win.
 	 */
+	@Deprecated
 	public boolean wasCorrectlyAnswered() {
+		return !this.handleCorrectAnswer();
+	}
+
+	/**
+	 * Handler for current player answering question correctly after roll
+	 * 
+	 * @return returns whether the play DID win.
+	 */
+	public boolean handleCorrectAnswer() {
 		Player player = getCurrentPlayer();
 		if (player.isInPenaltyBox()) {
 			goToNextPlayer();
-			return true;
+			return false;
 		}
-		
+
 		player.addToPurse(1);
-		boolean notWinner = !player.didPlayerWin();
+		boolean isWinner = player.didPlayerWin();
 		goToNextPlayer();
 
 		System.out.println("Answer was correct!!!!");
 		System.out.println(player.getName() + " now has " + player.getPurse() + " Gold Coins.");
 
-		return notWinner;
+		return isWinner;
 	}
 
 	/**
