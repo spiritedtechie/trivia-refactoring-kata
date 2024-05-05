@@ -3,6 +3,10 @@ Trivia game refactoring kata
 
 Refactored Trivia game codebase in Java, including addition of tests to support the refactoring.
 
+It's slimmed down version of the original repository with only the Java version.
+
+The idea of the exercise is to do some deliberate practice, and improve skills at designing test cases and refactoring. The idea is not to re-write the code from scratch, but rather to practice taking small steps, running the tests often, and incrementally improving the design.
+
 
 ## My notes
 
