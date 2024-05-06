@@ -7,10 +7,6 @@ import java.util.EnumMap;
 import java.util.LinkedList;
 import java.util.List;
 
-enum Category {
-	Pop, Science, Sports, Rock
-}
-
 class Player {
 	private static final int WINNING_PURSE_AMOUNT = 6;
 	private static final int TOTAL_PLACES = 12;
@@ -58,6 +54,10 @@ class Player {
 }
 
 class QuestionBank {
+	enum Category {
+		Pop, Science, Sports, Rock
+	}
+
 	private static final int NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
 
 	private EnumMap<Category, LinkedList<String>> questions = new EnumMap<>(Category.class);
@@ -228,7 +228,7 @@ public class Game {
 	}
 
 	void askQuestion() {
-		Category category = getCategory(getCurrentPlayer().getPlace());
+		QuestionBank.Category category = getCategory(getCurrentPlayer().getPlace());
 		System.out.println("The category is " + category);
 		String question = (String) questionBank.getNextQuestion(category);
 		System.out.println(question);

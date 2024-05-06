@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import com.adaptionsoft.games.uglytrivia.QuestionBank.Category;
+
 public class QuestionBankTest {
 
 	private QuestionBank questionBank = new QuestionBank();
