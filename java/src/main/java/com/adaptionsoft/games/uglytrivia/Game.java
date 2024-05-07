@@ -67,7 +67,7 @@ class QuestionBank {
 
 	private static final int NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
 
-	private EnumMap<Category, LinkedList<String>> questions = new EnumMap<>(Category.class);
+	private final EnumMap<Category, LinkedList<String>> questions = new EnumMap<>(Category.class);
 
 	public QuestionBank() {
 		initialiseQuestions();
@@ -118,9 +118,9 @@ public class Game {
 
 	private static final int MAXIMUM_NUMBER_OF_PLAYERS_ALLOWED = 5;
 
-	private List<Player> players = new ArrayList<>();
+	private final List<Player> players = new ArrayList<>();
 
-	private QuestionBank questionBank;
+	private final QuestionBank questionBank;
 
 	private int currentPlayerIndex = 0;
 
@@ -168,8 +168,7 @@ public class Game {
 		if (player.isInPenaltyBox() && isEvenRoll) {
 			System.out.println(player.getName() + " is not getting out of the penalty box");
 		} else {
-			player = player.setInPenaltyBox(false);
-			player = player.updateNextPlace(roll);
+			player = player.setInPenaltyBox(false).updateNextPlace(roll);
 			this.setPlayerNumbered(currentPlayerIndex, player);
 
 			System.out.println(player.getName() + "'s new location is " + player.getPlace());
