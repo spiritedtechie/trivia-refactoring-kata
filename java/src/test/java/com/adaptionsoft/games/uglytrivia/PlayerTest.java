@@ -19,9 +19,11 @@ public class PlayerTest {
 
     @Test
     public void test_updateNextPlaceIsCurrentPlacePlusTheRollValue() {
-        player.updateNextPlace(2);
+        assertEquals(0, player.getPlace());
 
-        assertEquals(2, player.getPlace());
+        Player updated = player.updateNextPlace(2);
+
+        assertEquals(2, updated.getPlace());
 
     }
 
@@ -34,28 +36,28 @@ public class PlayerTest {
 
     @Test
     public void test_updateNextPlaceMaxesAt11() {
-        player.updateNextPlace(11);
+        Player updated = player.updateNextPlace(11);
 
-        assertEquals(11, player.getPlace());
+        assertEquals(11, updated.getPlace());
     }
 
     @Test
     public void test_add1CoinToPurseForPlayer() {
         assertEquals(0, player.getPurse());
 
-        player.addToPurse(1);
+        Player updated = player.addToPurse(1);
 
-        assertEquals(1, player.getPurse());
+        assertEquals(1, updated.getPurse());
     }
 
     @Test
     public void test_add2CoinToPurseForPlayer() {
         assertEquals(0, player.getPurse());
 
-        player.addToPurse(1);
-        player.addToPurse(1);
+        Player updated = player.addToPurse(1);
+        updated = updated.addToPurse(1);
 
-        assertEquals(2, player.getPurse());
+        assertEquals(2, updated.getPurse());
     }
 
     @Test
@@ -74,15 +76,17 @@ public class PlayerTest {
 
     @Test
     public void test_didPlayerWin_true_whenPurseEqualToSix() {
-        addCoinsToPurse(player, 6);
+        Player updated = addCoinsToPurse(player, 6);
 
-        assertTrue(player.didPlayerWin());
+        assertTrue(updated.didPlayerWin());
     }
 
-    private void addCoinsToPurse(Player player, int coinCount) {
+    private Player addCoinsToPurse(Player player, int coinCount) {
+        Player updated = player;
         for (int times = 1; times <= coinCount; times++) {
-            player.addToPurse(1);
+            updated = updated.addToPurse(1);
         }
+        return updated;
     }
 
     @Test
@@ -94,8 +98,8 @@ public class PlayerTest {
     public void test_inPenaltyBox_true() {
         assertFalse(player.isInPenaltyBox());
 
-        player.setInPenaltyBox(true);
+        Player updated = player.setInPenaltyBox(true);
 
-        assertTrue(player.isInPenaltyBox());
+        assertTrue(updated.isInPenaltyBox());
     }
 }

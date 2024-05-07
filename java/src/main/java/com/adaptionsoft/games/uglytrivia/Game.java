@@ -11,13 +11,20 @@ class Player {
 	private static final int WINNING_PURSE_AMOUNT = 6;
 	private static final int TOTAL_PLACES = 12;
 
-	private String name;
-	private int place = 0;
-	private int purse = 0;
-	private boolean inPenaltyBox = false;
+	private final String name;
+	private final int place;
+	private final int purse;
+	private final boolean inPenaltyBox;
 
 	public Player(String name) {
+		this(name, 0, 0, false);
+	}
+
+	public Player(String name, int place, int purse, boolean inPenaltyBox) {
 		this.name = name;
+		this.place = place;
+		this.purse = purse;
+		this.inPenaltyBox = inPenaltyBox;
 	}
 
 	String getName() {
@@ -32,20 +39,20 @@ class Player {
 		return purse;
 	}
 
-	void addToPurse(int coins) {
-		this.purse += coins;
+	Player addToPurse(int coins) {
+		return new Player(this.name, this.place, this.purse + coins, this.inPenaltyBox);
 	}
 
 	boolean isInPenaltyBox() {
 		return inPenaltyBox;
 	}
 
-	void setInPenaltyBox(boolean inPenaltyBox) {
-		this.inPenaltyBox = inPenaltyBox;
+	Player setInPenaltyBox(boolean inPenaltyBox) {
+		return new Player(this.name, this.place, this.purse, inPenaltyBox);
 	}
 
-	void updateNextPlace(int roll) {
-		this.place = (place + roll) % TOTAL_PLACES;
+	Player updateNextPlace(int roll) {
+		return new Player(this.name, (this.place + roll) % TOTAL_PLACES, this.purse, this.inPenaltyBox);
 	}
 
 	boolean didPlayerWin() {
@@ -161,11 +168,14 @@ public class Game {
 		if (player.isInPenaltyBox() && isEvenRoll) {
 			System.out.println(player.getName() + " is not getting out of the penalty box");
 		} else {
-			player.setInPenaltyBox(false);
-			player.updateNextPlace(roll);
+			player = player.setInPenaltyBox(false);
+			player = player.updateNextPlace(roll);
+			this.setPlayerNumbered(currentPlayerIndex, player);
+
 			System.out.println(player.getName() + "'s new location is " + player.getPlace());
 			askQuestion();
 		}
+
 	}
 
 	/**
@@ -191,8 +201,10 @@ public class Game {
 			return false;
 		}
 
-		player.addToPurse(1);
+		player = player.addToPurse(1);
 		boolean isWinner = player.didPlayerWin();
+		this.setPlayerNumbered(currentPlayerIndex, player);
+
 		goToNextPlayer();
 
 		System.out.println("Answer was correct!!!!");
@@ -218,7 +230,9 @@ public class Game {
 	 */
 	public boolean handleWrongAnswer() {
 		Player player = getCurrentPlayer();
-		player.setInPenaltyBox(true);
+		player = player.setInPenaltyBox(true);
+		this.setPlayerNumbered(currentPlayerIndex, player);
+
 		goToNextPlayer();
 
 		System.out.println("Question was incorrectly answered");
@@ -240,6 +254,14 @@ public class Game {
 
 	Player getCurrentPlayer() {
 		return players.get(currentPlayerIndex);
+	}
+
+	Player getPlayerNumbered(int playerNo) {
+		return players.get(playerNo);
+	}
+
+	void setPlayerNumbered(int playerNo, Player player) {
+		players.set(playerNo, player);
 	}
 
 	void goToNextPlayer() {

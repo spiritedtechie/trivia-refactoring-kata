@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.function.Function;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -99,12 +100,14 @@ public class GameTest {
 
 	@Test
 	public void integration_test_roll_wherePlayerNotInPenaltyBox() {
-		Player player = game.getCurrentPlayer();
-		assertEquals(0, player.getPlace());
+		mutatingPlayer(0, (Player player) -> {
+			return player.setInPenaltyBox(false);
+		});	
 
 		game.rollDice(5);
 
-		assertEquals(5, player.getPlace());
+		Player updatedPlayer = game.getPlayerNumbered(0);
+		assertEquals(5, updatedPlayer.getPlace());
 		assertEquals("Bob is the current player\n" + //
 				"They have rolled a 5\n" + //
 				"Bob's new location is 5\n" + //
@@ -114,34 +117,36 @@ public class GameTest {
 
 	@Test
 	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidNotRollAnOddNumberSoStaysInPenaltyBox() {
-		Player player = game.getCurrentPlayer();
-		player.setInPenaltyBox(true);
-		assertEquals(0, player.getPlace());
+		mutatingPlayer(0, (Player player) -> {
+			return player.setInPenaltyBox(true);
+		});	
 
 		game.rollDice(4);
 
-		assertEquals(0, player.getPlace());
+		Player updatedPlayer = game.getPlayerNumbered(0);
+		assertEquals(0, updatedPlayer.getPlace());
+		assertTrue(updatedPlayer.isInPenaltyBox());
 		assertEquals("Bob is the current player\n" + //
 				"They have rolled a 4\n" + //
 				"Bob is not getting out of the penalty box", outputStreamCaptor.toString().trim());
-		assertTrue(player.isInPenaltyBox());
 	}
 
 	@Test
 	public void integration_test_roll_wherePlayerInPenaltyBoxAndDidRollAnOddNumberSoGetsOutOfPenaltyBox() {
-		Player player = game.getCurrentPlayer();
-		player.setInPenaltyBox(true);
-		assertEquals(0, player.getPlace());
+		mutatingPlayer(0, (Player player) -> {
+			return player.setInPenaltyBox(true);
+		});		
 
 		game.rollDice(5);
 
-		assertEquals(5, player.getPlace());
+		Player updatedPlayer = game.getPlayerNumbered(0);
+		assertEquals(5, updatedPlayer.getPlace());
+		assertFalse(updatedPlayer.isInPenaltyBox());
 		assertEquals("Bob is the current player\n" + //
 				"They have rolled a 5\n" + //
 				"Bob's new location is 5\n" + //
 				"The category is Science\n" + //
 				"Science Question 0", outputStreamCaptor.toString().trim());
-		assertFalse(player.isInPenaltyBox());
 	}
 
 	@Test
@@ -170,50 +175,63 @@ public class GameTest {
 
 	@Test
 	public void integration_test_wasCorrectlyAnswered_wherePlayerNotInPenaltyBox() {
-		Player player = game.getCurrentPlayer();
-		player.setInPenaltyBox(false);
+		Player player = mutatingPlayer(0, (Player p) -> {
+			return p.setInPenaltyBox(false);
+		});	
 		assertEquals(player, game.getCurrentPlayer());
-		assertEquals(0, player.getPurse());
+
 
 		boolean wasNotWinner = game.wasCorrectlyAnswered();
 
-		assertEquals(1, player.getPurse());
+		Player updatedPlayer = game.getPlayerNumbered(0);
+		assertEquals(1, updatedPlayer.getPurse());
+		assertFalse(updatedPlayer.isInPenaltyBox());
 		assertEquals("Answer was correct!!!!\n" + //
 				"Bob now has 1 Gold Coins.", outputStreamCaptor.toString().trim());
 		assertTrue(wasNotWinner);
 		assertEquals("John", game.getCurrentPlayer().getName());
-		assertFalse(player.isInPenaltyBox());
+
 	}
 
 	@Test
 	public void integration_test_wasCorrectlyAnswered_wherePlayerInPenaltyBox() {
-		Player player = game.getCurrentPlayer();
-		player.setInPenaltyBox(true);
+		Player player = mutatingPlayer(0, (Player p) -> {
+			return p.setInPenaltyBox(true);
+		});	
 		assertEquals(player, game.getCurrentPlayer());
-		assertEquals(0, player.getPurse());
 
 		boolean wasNotWinner = game.wasCorrectlyAnswered();
 
-		assertEquals(0, player.getPurse());
+		Player updatedPlayer = game.getPlayerNumbered(0);
+		assertEquals(0, updatedPlayer.getPurse());
+		assertTrue(player.isInPenaltyBox());
 		assertEquals("", outputStreamCaptor.toString().trim());
 		assertTrue(wasNotWinner);
 		assertEquals("John", game.getCurrentPlayer().getName());
-		assertTrue(player.isInPenaltyBox());
 	}
 
 	@Test
 	public void integration_test_wrongAnswer() {
-		Player player = game.getCurrentPlayer();
-		player.setInPenaltyBox(false);
+		Player player = mutatingPlayer(0, (Player p) -> {
+			return p.setInPenaltyBox(false);
+		});	
 		assertEquals(player, game.getCurrentPlayer());
 
 		boolean wasNotWinner = game.wrongAnswer();
 
-		assertEquals(0, player.getPurse());
+		Player updatedPlayer = game.getPlayerNumbered(0);
+		assertEquals(0, updatedPlayer.getPurse());
+		assertTrue(updatedPlayer.isInPenaltyBox());
 		assertEquals("Question was incorrectly answered\n" + //
 				"Bob was sent to the penalty box", outputStreamCaptor.toString().trim());
 		assertTrue(wasNotWinner);
 		assertEquals("John", game.getCurrentPlayer().getName());
-		assertTrue(player.isInPenaltyBox());
+	}
+
+	private Player mutatingPlayer(int playerNumber, Function<Player, Player> func) {
+		Player player = game.getPlayerNumbered(playerNumber);
+		player = func.apply(player);
+		game.setPlayerNumbered(0, player);
+		return player;
 	}
 }
