@@ -35,7 +35,7 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_goToNextPlayerCannotExceedNumberOfPlayers() throws Exception {
+	public void test_goToNextPlayer_cannotExceedNumberOfPlayers() throws Exception {
 		assertEquals("Bob", game.getCurrentPlayer().getName());
 		game.goToNextPlayer();
 		assertEquals("John", game.getCurrentPlayer().getName());
@@ -44,7 +44,17 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_addPlayerCanOnlySupportAtMost5Players() {
+	public void test_addPlayer_initialisesPlayersCorrectyl() {
+		Player player = game.getCurrentPlayer();
+
+		assertEquals("Bob", player.getName());
+		assertEquals(0, player.getPlace());
+		assertEquals(0, player.getPurse());
+		assertFalse(player.isInPenaltyBox());
+	}
+
+	@Test
+	public void test_addPlayer_canOnlySupportAtMost5Players() {
 		game.add("George");
 		game.add("Fred");
 		game.add("Jane");
@@ -60,31 +70,31 @@ public class GameTest {
 	}
 
 	@Test
-	public void test_askQuestionPrintsTheNextQuestion() {
-		game.askQuestion();
-
-		assertEquals("The category is Pop\n" + "Pop Question 0", outputStreamCaptor.toString().trim());
-	}
-
-	@Test
 	public void test_numberofPlayers() {
 		assertEquals(2, game.numberOfPlayers());
 	}
 
 	@Test
-	public void test_numberofPlayersWhereNoPlayersAddedYet() {
+	public void test_numberofPlayers_whereNoPlayersAddedYet() {
 		game = new Game();
 
 		assertEquals(0, game.numberOfPlayers());
 	}
 
 	@Test
-	public void test_numberofPlayersOnceMorePlayersAdded() {
+	public void test_numberofPlayers_onceMorePlayersAdded() {
 		game.add("George");
 		game.add("Fred");
 		game.add("Jane");
 
 		assertEquals(5, game.numberOfPlayers());
+	}
+
+	@Test
+	public void test_askQuestion_printsTheNextQuestion() {
+		game.askQuestion();
+
+		assertEquals("The category is Pop\n" + "Pop Question 0", outputStreamCaptor.toString().trim());
 	}
 
 	@Test
