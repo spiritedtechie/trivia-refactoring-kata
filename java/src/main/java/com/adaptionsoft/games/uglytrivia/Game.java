@@ -67,7 +67,7 @@ class QuestionBank {
 
 	private static final int NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
 
-	private final EnumMap<Category, LinkedList<String>> questions = new EnumMap<>(Category.class);
+	private final EnumMap<Category, List<String>> questions = new EnumMap<>(Category.class);
 
 	public QuestionBank() {
 		initialiseQuestions();
@@ -75,22 +75,22 @@ class QuestionBank {
 
 	private void initialiseQuestions() {
 		for (Category category : Category.values()) {
-			LinkedList<String> categoryQuestions = new LinkedList<String>();
+			List<String> categoryQuestions = new LinkedList<String>();
 			for (int i = 0; i < NUMBER_OF_QUESTIONS_PER_CATEGORY; i++) {
-				categoryQuestions.addLast(category.name() + " Question " + i);
+				categoryQuestions.add(category.name() + " Question " + i);
 			}
 			questions.put(category, categoryQuestions);
 		}
 	}
 
 	String getNextQuestion(Category category) {
-		LinkedList<String> questionsForCategory = questions.get(category);
+		List<String> questionsForCategory = questions.get(category);
 
 		if (questionsForCategory.isEmpty()) {
 			throw new IllegalStateException("No further questions for category: " + category);
 		}
 
-		return questionsForCategory.removeFirst();
+		return questionsForCategory.remove(0);
 	}
 
 	static Category getCategory(int playerPlace) {
